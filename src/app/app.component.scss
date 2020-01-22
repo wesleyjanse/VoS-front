@@ -1,0 +1,40 @@
+.sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fafafa;
+}
+
+.sidenav {
+  background-color: #fff;
+  border-right: 1px solid rgba(179, 179, 179, 0.7);
+  width: 270px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 5px 0px lightgray;
+}
+
+.mat-list-item.active {
+    background-color: rgba(182,104,183,0.12); 
+    color: #B668B7;
+}
+
+.activeSvg{
+    fill: #B668B7;
+}
+
+#maintoolbar{
+    background-color: #fff;
+    border-bottom: 1px solid rgba(179, 179, 179, 0.7);
+}
+
+#notificationholder{
+    width: 60px;
+    height: 100%;
+    border-left: 1px solid rgba(179, 179, 179, 0.7);
+    border-right: 1px solid rgba(179, 179, 179, 0.7);
+}

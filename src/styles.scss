@@ -1,14 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/scss/bootstrap-grid";
-@import url('https://fonts.googleapis.com/css?family=Varela|Varela+Round&display=swap');
+@import "~bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css?family=Varela|Varela+Round&display=swap");
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
-
-body{
-    font-family: 'Varela', sans-serif;
-
-    h1,h2,h3,h4,h5{
-        font-family: 'Varela Round', sans-serif;
-    }
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Varela Round", sans-serif;
 
 }
 
+.svgIconColor{
+  fill: #505050;
+}
+
+.letterIcon{
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+  background-color: #B668B7;
+  color: white;
+  border-radius: 4px;
+}
+
+a{
+  text-decoration: none;
+
+}
+
+html,body{
+    min-height: 100vh;
+}
+
+body {
+  color: #505050;
+}
