@@ -13,6 +13,7 @@ import { LivestreamModule } from './components/livestream/livestream.module';
 import { ViolationModule } from './components/violation/violation.module';
 import { MembersModule } from './components/members/members.module';
 import { SecurityModule } from './security/security.module';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { SecurityModule } from './security/security.module';
     SecurityModule
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

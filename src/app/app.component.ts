@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from './security/authentication.service';
+import { User } from './shared/models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +12,27 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'VoS-Front';
   name = 'Admin';
-  letter = this.name.substr(0,1);
-  isLoggedIn = true;
+  letter = '';
+  isLoggedIn = false;
+  currentUser: User;
 
+  constructor(private authenticationService: AuthenticationService, private router: Router){
+    this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = user
+      if (user != null) {
+        this.isLoggedIn = true;
+        this.name = user.firstname;
+        this.letter = this.name.substr(0,1);
+      } else{
+        this.router.navigate(['login'])
+      }
+    })
+  }
+
+  logout(){
+    this.isLoggedIn = false;
+    this.authenticationService.logout();
+  }
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.

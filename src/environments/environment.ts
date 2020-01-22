@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://vosapi.azurewebsites.net/api/'
+  apiUrl: 'https://vosapi.azurewebsites.net/api'
 };
 
 /*

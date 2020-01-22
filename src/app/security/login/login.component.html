@@ -6,6 +6,9 @@
         </div>
         <div class="ml-5 mr-5 mt-3">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <p class="text-danger text-center">
+                    {{error}}
+                </p>
                 <div class="form-group">
                     <label for="email">E-mailadres</label>
                     <div class="input-group">
