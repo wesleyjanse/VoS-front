@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'livestream', component: LivestreamComponent},
   { path: 'violations', component: ViolationComponent},
   { path: 'members', component: MembersComponent},
-  { path: 'login', component: LoginComponent},
+  { path: 'login', component: LoginComponent, outlet: "login"},
 ];
 
 @NgModule({

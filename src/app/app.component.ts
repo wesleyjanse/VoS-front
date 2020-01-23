@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
         this.name = user.firstname;
         this.letter = this.name.substr(0,1);
       } else{
-        this.router.navigate(['login'])
+        this.router.navigate([{outlets: {login: 'login'}}])
       }
     })
   }

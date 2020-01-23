@@ -70,12 +70,11 @@
         </div>
       </mat-toolbar>
       <div class="m-3">
-        <div style="margin-top: 100px;">
+        <div style="margin-top: 60px;">
           <router-outlet ></router-outlet>
-
         </div>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
-  <router-outlet *ngIf="!isLoggedIn"></router-outlet>
+  <router-outlet name="login" *ngIf="!isLoggedIn"></router-outlet>
 </div>
