@@ -35,6 +35,7 @@ export class ViolationComponent implements OnInit {
     this.violationService.getViolationsByCameraID(this.cameras[$event.index].cameraID).subscribe(res => {
       this.violations = res
       this.dataSource = new MatTableDataSource<Violation>(res);
+      console.log(res)
     })
   }
 }

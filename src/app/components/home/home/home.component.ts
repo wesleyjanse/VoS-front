@@ -12,13 +12,16 @@ export class HomeComponent implements OnInit {
 
   violationCounts = [];
   cameras: Camera[];
-
+  loading = true;
 
   constructor(private violationService: ViolationService, private cameraService: CameraService) {
     this.cameraService.getCameras().subscribe(res => {
       this.cameras = res
       this.cameras.map(cam => {
-        this.violationService.getViolationCountByCameraID(cam.cameraID).subscribe(res => this.violationCounts.push(res));
+        this.violationService.getViolationCountByCameraID(cam.cameraID).subscribe(res => {
+          this.violationCounts.push(res)
+          this.loading = false;
+        });
       })
     });
     

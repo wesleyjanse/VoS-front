@@ -4,7 +4,7 @@
     </div>
     <div class="row">
         <div *ngFor="let cam of cameras; let i = index" class="col card-info d-flex align-items-center justify-content-center">
-            <div class="d-flex align-items-center flex-column">
+            <div *ngIf="!loading" class="d-flex align-items-center flex-column">
                 <div class="mb-2">
                     <img src="../../../../assets/icons/counterWarning.svg" alt="warningIcon">
                 </div>
@@ -15,6 +15,7 @@
                     {{violationCounts[i]}}
                 </div>
             </div>
+            <span *ngIf="loading" class="spinner-border spinner-border-lg"></span>
         </div>
     </div>
     <div class="row mt-5">

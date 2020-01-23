@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
         this.isLoggedIn = true;
         this.name = user.firstname;
         this.letter = this.name.substr(0,1);
+        this.router.navigate([{outlets: {primary: 'home'}}])
       } else{
         this.router.navigate([{outlets: {login: 'login'}}])
       }
