@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Inject } from '@angular/core';
 import { CameraService } from 'src/app/core/services/camera.service';
 import { ViolationService } from 'src/app/core/services/violation.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Violation } from 'src/app/shared/models/violation';
 import { Camera } from 'src/app/shared/models/camera';
 import * as moment from 'moment';
@@ -20,17 +20,25 @@ export class ViolationComponent implements OnInit {
   displayedColumns: string[] = ['Time', 'Message', 'Werknemer', 'Video'];
   moment: any = moment;
 
-  constructor(private cameraService: CameraService, private violationService: ViolationService) {
+  constructor(private cameraService: CameraService, private violationService: ViolationService, public dialog: MatDialog) {
     this.cameraService.getCameras().subscribe(res => this.cameras = res);
     this.moment.locale('nl');
   }
-
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
   }
+
+  openDialog(violation) {
+    this.dialog.open(DialogDataExampleDialog, {
+      data: {
+        violation
+      }
+    });
+  }
+
   getViolations($event) {
     this.violationService.getViolationsByCameraID(this.cameras[$event.index].cameraID).subscribe(res => {
       this.violations = res
@@ -40,5 +48,17 @@ export class ViolationComponent implements OnInit {
   }
 }
 
+@Component({
+  selector: 'dialog-data-example-dialog',
+  templateUrl: 'dialog-data-example-dialog.html',
+})
+export class DialogDataExampleDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  moment: any = moment;
+  ngOnInit(): void {
+    this.moment.locale('nl');
+  }
+}
 
-
+export interface DialogData {
+}
