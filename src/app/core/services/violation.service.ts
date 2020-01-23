@@ -14,4 +14,7 @@ export class ViolationService {
         return this._httpClient.get<Violation[]>(`${environment.apiUrl}/Violation/ViolationsByCamera?camId=` + camId);
     }
 
+    getViolationCountByCameraID(camId: number) {
+        return this._httpClient.get<number[]>(`${environment.apiUrl}/Violation/ViolationCountByCamera?camId=` + camId);
+    }
 }

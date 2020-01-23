@@ -8,36 +8,38 @@
                 <mat-tab [label]="cam.cameraName">
                     <div class="w-100">
                         <table mat-table [dataSource]="dataSource" class="w-100">
-                            <!-- Position Column -->
                             <ng-container matColumnDef="Time">
                                 <th mat-header-cell *matHeaderCellDef> Datum en tijdstip </th>
-                                <td mat-cell *matCellDef="let element"> 
+                                <td mat-cell *matCellDef="let element">
                                     <div style="font-size: 10px; font-weight: 600;">
                                         {{ moment(element.time).fromNow()}}
                                     </div>
                                     <div>
                                         {{ moment(element.time).format('LLL')}}
-                                    </div> 
+                                    </div>
                                 </td>
                             </ng-container>
 
-                            <!-- Name Column -->
-                            <!-- <ng-container matColumnDef="name">
-                                <th mat-header-cell *matHeaderCellDef> Name </th>
-                                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                            </ng-container> -->
+                            <ng-container matColumnDef="Message">
+                                <th mat-header-cell *matHeaderCellDef> Bericht </th>
+                                <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+                            </ng-container>
 
-                            <!-- Weight Column -->
-                            <!-- <ng-container matColumnDef="weight">
-                                <th mat-header-cell *matHeaderCellDef> Weight </th>
-                                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-                            </ng-container> -->
+                            <ng-container matColumnDef="Werknemer">
+                                <th mat-header-cell *matHeaderCellDef> Werknemer </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.employee ? element.employee.firstname + ' ' + employee.name : 'Geen detectie'}}
+                                </td>
+                            </ng-container>
 
-                            <!-- Symbol Column -->
-                            <!-- <ng-container matColumnDef="symbol">
-                                <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-                            </ng-container> -->
+                            <ng-container matColumnDef="Video">
+                                <th mat-header-cell *matHeaderCellDef> Video </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-icon-button>
+                                        <mat-icon>play_circle_outline</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
