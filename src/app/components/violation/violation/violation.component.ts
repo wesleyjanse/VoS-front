@@ -6,6 +6,7 @@ import { Violation } from 'src/app/shared/models/violation';
 import { Camera } from 'src/app/shared/models/camera';
 import * as moment from 'moment';
 import 'moment/locale/nl';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-violation',
@@ -13,21 +14,24 @@ import 'moment/locale/nl';
   styleUrls: ['./violation.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ViolationComponent implements OnInit {
+export class ViolationComponent {
   cameras: Camera[];
   violations: Violation[];
-  dataSource = new MatTableDataSource<Violation>(this.violations);
+  dataSource;
   displayedColumns: string[] = ['Time', 'Message', 'Werknemer', 'Video'];
   moment: any = moment;
+
+  @ViewChild(MatPaginator, { static: false }) set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;
+  }
 
   constructor(private cameraService: CameraService, private violationService: ViolationService, public dialog: MatDialog) {
     this.cameraService.getCameras().subscribe(res => this.cameras = res);
     this.moment.locale('nl');
+    this.dataSource = new MatTableDataSource([]);
   }
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-
-  ngOnInit() {
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
@@ -40,20 +44,24 @@ export class ViolationComponent implements OnInit {
   }
 
   getViolations($event) {
+    console.log(this.dataSource)
     this.violationService.getViolationsByCameraID(this.cameras[$event.index].cameraID).subscribe(res => {
       this.violations = res
       this.dataSource = new MatTableDataSource<Violation>(res);
-      console.log(res)
+      this.dataSource.paginator = this.paginator;
     })
   }
 }
 
+
+
+//Dialogbox
 @Component({
   selector: 'dialog-data-example-dialog',
-  templateUrl: 'dialog-data-example-dialog.html',
+  templateUrl: 'dialog-video.html',
 })
 export class DialogDataExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
   moment: any = moment;
   ngOnInit(): void {
     this.moment.locale('nl');
