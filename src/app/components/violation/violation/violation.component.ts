@@ -7,6 +7,7 @@ import { Camera } from 'src/app/shared/models/camera';
 import * as moment from 'moment';
 import 'moment/locale/nl';
 import { tap } from 'rxjs/operators';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-violation',
@@ -59,9 +60,31 @@ export class ViolationComponent {
 @Component({
   selector: 'dialog-data-example-dialog',
   templateUrl: 'dialog-video.html',
+  styleUrls: ['./video.component.scss'],
 })
 export class DialogDataExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+  
+  progressbarValue = 0;
+  curSec: number = 0;
+
+  startTimer(seconds: number) {
+    const time = seconds;
+    const timer$ = interval(1000);
+
+    const sub = timer$.subscribe((sec) => {
+      this.progressbarValue = 0 + sec * 100 / seconds;
+      this.curSec = sec;
+
+      if (this.curSec === seconds) {
+        sub.unsubscribe();
+      }
+    });
+  }
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    this.startTimer(34)
+  }
   moment: any = moment;
   ngOnInit(): void {
     this.moment.locale('nl');

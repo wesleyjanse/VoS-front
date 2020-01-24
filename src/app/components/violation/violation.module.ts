@@ -5,7 +5,7 @@ import { CameraService } from 'src/app/core/services/camera.service';
 import { ViolationService } from 'src/app/core/services/violation.service';
 import { MatTableModule, MatIconModule, MatPaginatorModule, MatTabsModule, MatButtonModule } from '@angular/material'
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatProgressBarModule } from '@angular/material';
 
 
 @NgModule({
@@ -18,7 +18,8 @@ import { MatDialogModule } from '@angular/material';
     MatIconModule,
     MatButtonModule,
     SharedModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule
   ],
   providers: [
     CameraService,
