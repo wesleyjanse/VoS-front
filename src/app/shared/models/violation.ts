@@ -6,6 +6,6 @@ export class Violation {
     message: string;
     gif: string;
     time: Date;
-    employee: Employee;
+    employee: Employee[];
     camera: Camera;
 }

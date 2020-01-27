@@ -3,6 +3,7 @@ import * as Chart from 'chart.js'
 import { ViolationService } from 'src/app/core/services/violation.service';
 import { CameraService } from 'src/app/core/services/camera.service';
 import { Camera } from 'src/app/shared/models/camera';
+import { ViolationCountCamera } from 'src/app/shared/models/violationCountCamera';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -10,19 +11,13 @@ import { Camera } from 'src/app/shared/models/camera';
 })
 export class HomeComponent implements OnInit {
 
-  violationCounts = [];
-  cameras: Camera[];
+  violationCounts: ViolationCountCamera[];
   loading = true;
 
   constructor(private violationService: ViolationService, private cameraService: CameraService) {
-    this.cameraService.getCameras().subscribe(res => {
-      this.cameras = res
-      this.cameras.map(cam => {
-        this.violationService.getViolationCountByCameraID(cam.cameraID).subscribe(res => {
-          this.violationCounts.push(res)
-          this.loading = false;
-        });
-      })
+    this.violationService.getViolationCountByCamera().subscribe(res => {
+      this.violationCounts = res;
+      this.loading = false
     });
     
   }
@@ -51,9 +46,6 @@ export class HomeComponent implements OnInit {
       }
     });
   }
-
-
-
 
   ngOnInit() {
   }

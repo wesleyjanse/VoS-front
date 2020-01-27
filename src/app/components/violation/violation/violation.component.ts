@@ -15,10 +15,13 @@ import { interval } from 'rxjs';
   styleUrls: ['./violation.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
+
 export class ViolationComponent {
   cameras: Camera[];
   violations: Violation[];
   dataSource;
+  loading = false;
+  loadingCameras = true;
   displayedColumns: string[] = ['Time', 'Message', 'Werknemer', 'Video'];
   moment: any = moment;
 
@@ -27,7 +30,11 @@ export class ViolationComponent {
   }
 
   constructor(private cameraService: CameraService, private violationService: ViolationService, public dialog: MatDialog) {
-    this.cameraService.getCameras().subscribe(res => this.cameras = res);
+    this.cameraService.getCameras().subscribe(res => {
+      this.cameras = res
+      this.loadingCameras = false;
+    
+    });
     this.moment.locale('nl');
     this.dataSource = new MatTableDataSource([]);
   }
@@ -46,15 +53,15 @@ export class ViolationComponent {
 
   getViolations($event) {
     console.log(this.dataSource)
+    this.loading = true;
     this.violationService.getViolationsByCameraID(this.cameras[$event.index].cameraID).subscribe(res => {
       this.violations = res
       this.dataSource = new MatTableDataSource<Violation>(res);
       this.dataSource.paginator = this.paginator;
+      this.loading = false;
     })
   }
 }
-
-
 
 //Dialogbox
 @Component({
@@ -63,8 +70,6 @@ export class ViolationComponent {
   styleUrls: ['./video.component.scss'],
 })
 export class DialogDataExampleDialog {
-
-  
   progressbarValue = 0;
   curSec: number = 0;
 
@@ -77,7 +82,7 @@ export class DialogDataExampleDialog {
       this.curSec = sec;
 
       if (this.curSec === seconds) {
-        sub.unsubscribe();
+        this.startTimer(seconds)
       }
     });
   }

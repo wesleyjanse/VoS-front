@@ -2,13 +2,8 @@
   <span style="font-size: 14px;">Werknemer:</span> <span style="font-weight: 600; font-size: 14px;">
     {{ data.violation.employee ? data.violation.employee.firstname + ' ' + data.violation.employee.name : 'geen detectie' }}</span>
 </p>
-<div mat-dialog-content class="videoContainer">
+<div mat-dialog-content>
   <img class="video" [src]="data.violation.gif" alt="Watch video">
-  <div class="overlay">
-    <button  mat-icon-button class="text">
-     <mat-icon style="transform: scale(3);">play_circle_outline</mat-icon>
-    </button>
-  </div>
 </div>
 <mat-progress-bar mode="determinate" [value]="progressbarValue"></mat-progress-bar>
 <mat-dialog-actions>

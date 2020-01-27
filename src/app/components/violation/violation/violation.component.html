@@ -4,49 +4,58 @@
     </div>
     <div class="row">
         <mat-tab-group (selectedTabChange)="getViolations($event)" style="width: 100%;">
-            <ng-container *ngFor="let cam of cameras">
-                <mat-tab [label]="cam.cameraName">
-                    <div class="w-100">
-                        <table mat-table [dataSource]="dataSource" class="w-100">
-                            <ng-container matColumnDef="Time">
-                                <th mat-header-cell *matHeaderCellDef> Datum en tijdstip </th>
-                                <td mat-cell *matCellDef="let element">
-                                    <div style="font-size: 10px; font-weight: 600;">
-                                        {{ moment(element.time).fromNow()}}
-                                    </div>
-                                    <div>
-                                        {{ moment(element.time).format('LLL')}}
-                                    </div>
-                                </td>
-                            </ng-container>
+            <div style="background-color: white; text-align: center;" *ngIf="loadingCameras">
+                <img src="../../../../assets/images/cloud_load.gif" alt="loading">
+            </div>
+            <ng-container *ngIf="!loadingCameras">
+                <ng-container *ngFor="let cam of cameras">
+                    <mat-tab [label]="cam.cameraName">
+                        <div class="w-100">
+                            <div style="background-color: white; text-align: center;" *ngIf="loading">
+                                <img src="../../../../assets/images/cloud_load.gif" alt="loading">
+                            </div>
+                            <table *ngIf="!loading" mat-table [dataSource]="dataSource" class="w-100">
+                                <ng-container matColumnDef="Time">
+                                    <th mat-header-cell *matHeaderCellDef> Datum en tijdstip </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div style="font-size: 10px; font-weight: 600;">
+                                            {{ moment(element.time).fromNow()}}
+                                        </div>
+                                        <div>
+                                            {{ moment(element.time).format('LLL')}}
+                                        </div>
+                                    </td>
+                                </ng-container>
 
-                            <ng-container matColumnDef="Message">
-                                <th mat-header-cell *matHeaderCellDef> Bericht </th>
-                                <td mat-cell *matCellDef="let element"> {{element.message}} </td>
-                            </ng-container>
+                                <ng-container matColumnDef="Message">
+                                    <th mat-header-cell *matHeaderCellDef> Bericht </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+                                </ng-container>
 
-                            <ng-container matColumnDef="Werknemer">
-                                <th mat-header-cell *matHeaderCellDef> Werknemer </th>
-                                <td mat-cell *matCellDef="let element">
-                                    {{element.employee ? element.employee.firstname + ' ' + element.employee.name : 'Geen detectie'}}
-                                </td>
-                            </ng-container>
+                                <ng-container matColumnDef="Werknemer">
+                                    <th mat-header-cell *matHeaderCellDef> Werknemer </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element.employee ? element.employee.firstname + ' ' + element.employee.name : 'Geen detectie'}}
+                                    </td>
+                                </ng-container>
 
-                            <ng-container matColumnDef="Video">
-                                <th mat-header-cell *matHeaderCellDef> Video </th>
-                                <td mat-cell *matCellDef="let element">
-                                    <button (click)="openDialog(element)" mat-icon-button>
-                                        <mat-icon>play_circle_outline</mat-icon>
-                                    </button>
-                                </td>
-                            </ng-container>
-
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
-                    </div>
-                </mat-tab>
+                                <ng-container matColumnDef="Video">
+                                    <th mat-header-cell *matHeaderCellDef> Video </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <button (click)="openDialog(element)" mat-icon-button>
+                                            <mat-icon>play_circle_outline</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+                    </mat-tab>
+                </ng-container>
             </ng-container>
+
+
         </mat-tab-group>
         <mat-paginator style="width: 100%;" #paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons>
         </mat-paginator>

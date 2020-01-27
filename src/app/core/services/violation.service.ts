@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Camera } from '../../shared/models/camera';
 import { environment } from 'src/environments/environment';
 import { Violation } from 'src/app/shared/models/violation';
+import { AuthenticationService } from 'src/app/security/authentication.service';
+import { ViolationCountCamera } from 'src/app/shared/models/violationCountCamera';
 
 @Injectable()
 export class ViolationService {
@@ -14,7 +16,7 @@ export class ViolationService {
         return this._httpClient.get<Violation[]>(`${environment.apiUrl}/Violation/ViolationsByCamera?camId=` + camId);
     }
 
-    getViolationCountByCameraID(camId: number) {
-        return this._httpClient.get<number[]>(`${environment.apiUrl}/Violation/ViolationCountByCamera?camId=` + camId);
+    getViolationCountByCamera(): Observable<ViolationCountCamera[]> {
+        return this._httpClient.get<ViolationCountCamera[]>(`${environment.apiUrl}/Violation/ViolationCountByCamera`);
     }
 }

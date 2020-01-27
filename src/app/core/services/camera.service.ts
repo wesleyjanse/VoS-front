@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Camera } from '../../shared/models/camera';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from 'src/app/security/authentication.service';
 
 @Injectable()
 export class CameraService {
@@ -10,6 +11,7 @@ export class CameraService {
   constructor(private _httpClient: HttpClient) { }
 
   getCameras(): Observable<Camera[]> {
+    console.log("CAM")
     return this._httpClient.get<Camera[]>(`${environment.apiUrl}/Camera`);
   }
 

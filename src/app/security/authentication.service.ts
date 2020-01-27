@@ -22,7 +22,7 @@ export class AuthenticationService {
             this.storeUser(userDetails, token);
         }
     }
-
+    
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
