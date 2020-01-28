@@ -52,9 +52,9 @@ export class ViolationComponent {
   }
 
   getViolations($event) {
-    console.log(this.dataSource)
     this.loading = true;
     this.violationService.getViolationsByCameraID(this.cameras[$event.index].cameraID).subscribe(res => {
+      console.log('violations', res)
       this.violations = res
       this.dataSource = new MatTableDataSource<Violation>(res);
       this.dataSource.paginator = this.paginator;

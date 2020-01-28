@@ -28,21 +28,31 @@ export class HomeComponent implements OnInit {
     this.canvas = document.getElementById('myChart');
     this.ctx = this.canvas.getContext('2d');
     let myChart = new Chart(this.ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: ["Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "Oktober", "November", "December"],
         datasets: [{
           label: "Aantal overtredingen",
           data: [10, 5, 4, 8, 2, 0, 7, 4, 6, 7, 3, 1],
-          backgroundColor: '#B668B7',
+          fill: false,
+          borderColor: '#B668B7',
           borderWidth: 0,
         }]
       },
 
       options: {
+        legend:{
+          display:false
+        },
         responsive: true,
-        display: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
       }
     });
   }

@@ -10,7 +10,7 @@ export class User {
       this.token = token;
     }
   
-    userID: string;
+    userID: number;
     email: string;
     firstname: string;
     name: string;

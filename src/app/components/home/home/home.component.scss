@@ -1,13 +1,14 @@
-.card-info{
+.card-info, .card-graph{
     width: 100%;
     margin: 0px 40px 0px 0px;
-    height: 230px;
+    height:fit-content;
     background-color: #fff;
     color: #505050;
     border-radius: 10px;
     box-shadow: 1px 1px 5px 0px lightgray;
 }    
 
-.chart{
-    height: 400px!important;
-}
+canvas{
+
+    width: 800px !important;
+  }

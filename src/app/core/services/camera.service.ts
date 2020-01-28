@@ -11,7 +11,6 @@ export class CameraService {
   constructor(private _httpClient: HttpClient) { }
 
   getCameras(): Observable<Camera[]> {
-    console.log("CAM")
     return this._httpClient.get<Camera[]>(`${environment.apiUrl}/Camera`);
   }
 
