@@ -1,26 +1,42 @@
 <div class="container">
-    <mat-list>
-        <div style="display: flex; justify-content: space-between;">
-            <h3>Gebruikers</h3>
-            <p>
-                <mat-slide-toggle (change)="onChange($event)">Toon werknemers</mat-slide-toggle>
-            </p>
-        </div>
-        <table mat-table [dataSource]="dataSource" class="w-100">
-            <ng-container matColumnDef="Id">
-                <th mat-header-cell *matHeaderCellDef> Nummer </th>
-                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
-            <ng-container matColumnDef="Firstname">
-                <th mat-header-cell *matHeaderCellDef> Voornaam </th>
-                <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
-            </ng-container>
-            <ng-container matColumnDef="Lastname">
-                <th mat-header-cell *matHeaderCellDef> Achternaam </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </mat-list>
+    <div style="display: flex; justify-content: space-between;">
+        <h3>Gebruikers</h3>
+        <p>
+            <mat-slide-toggle (change)="onChange($event)">Toon werknemers</mat-slide-toggle>
+        </p>
+    </div>
+    <div *ngIf="loading" style="background-color: white; text-align: center;">
+        <img src="../../../../assets/images/cloud_load.gif" alt="loading">
+    </div>
+    <table *ngIf="!loading" mat-table [dataSource]="dataSource" class="w-100">
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef> Nummer </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Firstname">
+            <th mat-header-cell *matHeaderCellDef> Voornaam </th>
+            <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Lastname">
+            <th mat-header-cell *matHeaderCellDef> Achternaam </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Type">
+            <th mat-header-cell *matHeaderCellDef> Functie </th>
+            <td mat-cell *matCellDef="let element"> {{element.type == 'user'? 'Gebruiker' : 'Werknemer'}} </td>
+        </ng-container>
+        <ng-container style="text-align: right;" matColumnDef="Actions" style="text-align: right;">
+            <th style="text-align: right;" mat-header-cell *matHeaderCellDef> Acties </th>
+            <td style="text-align: right;" mat-cell *matCellDef="let element">
+                <button (click)="edit(element)" mat-stroked-button style="border-color: #F25C19; color: #505050;">
+                    <mat-icon>edit</mat-icon>
+                </button> &nbsp;
+                <button (click)="delete(element)" mat-stroked-button style="border-color: #b668b7; color: #505050;">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>

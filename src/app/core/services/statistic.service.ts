@@ -6,25 +6,15 @@ import { environment } from 'src/environments/environment';
 import { AuthenticationService } from 'src/app/security/authentication.service';
 import { User } from 'src/app/shared/models/user';
 import { Employee } from 'src/app/shared/models/employee';
+import { Statistics } from 'src/app/shared/models/stats';
+
 
 @Injectable()
-export class UserService {
+export class StatisticService {
 
   constructor(private _httpClient: HttpClient) { }
 
-  getUsers(): Observable<User[]> {
-    return this._httpClient.get<User[]>(`${environment.apiUrl}/User`);
-  }
-
-  getUser(id){
-    return this._httpClient.get<User>(`${environment.apiUrl}/User/` + id);
-  }
-
-  getEmployee(id){
-    return this._httpClient.get<User>(`${environment.apiUrl}/Employee/` + id);
-  }
-
-  getEmployees(): Observable<Employee[]> {
-    return this._httpClient.get<Employee[]>(`${environment.apiUrl}/Employee`);
+  getStatistics(): Observable<Statistics[]> {
+    return this._httpClient.get<Statistics[]>(`${environment.apiUrl}/Statistics/getLastYear`);
   }
 }

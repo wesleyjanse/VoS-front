@@ -5,14 +5,22 @@ import { LivestreamComponent } from './components/livestream/livestream/livestre
 import { ViolationComponent } from './components/violation/violation/violation.component';
 import { MembersComponent } from './components/members/members/members.component';
 import { LoginComponent } from './security/login/login.component';
+import { EditMemberComponent } from './components/members/edit-member/edit-member.component';
 
 
 const routes: Routes = [
+  //Login Outlet
+  { path: 'login', component: LoginComponent, outlet: "login"},
+
+  //Main Outlet
+  //Main Routes
   { path: 'home', component: HomeComponent },
   { path: 'livestream', component: LivestreamComponent},
   { path: 'violations', component: ViolationComponent},
+
+  //Members & Employees
   { path: 'members', component: MembersComponent},
-  { path: 'login', component: LoginComponent, outlet: "login"},
+  { path: 'members/:id/edit', component: EditMemberComponent},
 ];
 
 @NgModule({
