@@ -7,6 +7,7 @@ import { MatIconModule, MatBadgeModule, MatButtonModule } from '@angular/materia
 import { MemberDialogComponent } from './components/member-dialog/member-dialog.component'
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxQRCodeModule } from 'ngx-qrcode2';    
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatTabsModule,
     ReactiveFormsModule,
-    AngularSvgIconModule
+    AngularSvgIconModule,
+    NgxQRCodeModule
   ],
   exports: [
     RouterModule,

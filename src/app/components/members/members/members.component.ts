@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/shared/models/user';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { DataTableModel } from 'src/app/shared/models/dataTableModel';
 import { Router } from '@angular/router';
 import { MemberDialogComponent } from 'src/app/shared/components/member-dialog/member-dialog.component';
@@ -20,6 +20,11 @@ export class MembersComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, private userService: UserService, private router: Router) {
+  }
+
+  
+  @ViewChild(MatPaginator, { static: false }) set paginator(value: MatPaginator) {
+    this.dataSource.paginator = value;
   }
 
   ngOnInit() {
