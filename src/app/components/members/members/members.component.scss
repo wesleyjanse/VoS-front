@@ -14,3 +14,18 @@ th.mat-header-cell, td.mat-cell {
 :host ::ng-deep  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
     background-color: #F25C19;
 }
+
+.floatingActionButton{
+    cursor: pointer;
+    background-color: red;
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    color: white;
+    height: 75px;
+    width: 75px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

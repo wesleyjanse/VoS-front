@@ -47,8 +47,42 @@ export class MemberDialogComponent implements OnInit {
     }
   }
 
+
+  deleteUser() {
+    const dialogRef = this.dialog.open(ConfirmModelComponent, {
+      width: '400px',
+      data: {
+        title: `Verwijder ${this.data.user.type != 'employee' ? 'gebruiker' : 'medewerker'}`,
+        info: `Bent u zeker dat u *${this.data.user.type != 'employee' ? this.selectedMember.firstname : this.selectedEmployee.firstname} ${this.data.user.type != 'employee' ? this.selectedMember.name : this.selectedEmployee.name}* wilt verwijder?`
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          if (this.data.user.type != 'employee') {
+            this.userService.deleteUser(this.selectedMember.userID).subscribe(res => {
+              this.toast.show({
+                text: `Gebruiker verwijderd!`,
+                type: 'info',
+              })
+            })
+          } else {
+            this.userService.deleteEmployee(this.selectedEmployee.employeeID).subscribe(res => {
+              this.toast.show({
+                text: `Medewerker verwijderd!`,
+                type: 'info',
+              })
+            })
+          }
+          this.dialogRef.close(true);
+        }
+      }
+    );
+  }
+
   href: string;
-  download(){
+  download() {
     this.href = document.getElementsByTagName('img')[1].src;
   }
 
@@ -83,13 +117,10 @@ export class MemberDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<MemberDialogComponent>,
-    private route: ActivatedRoute,
-    private router: Router,
     private userService: UserService,
     private fb: FormBuilder,
     private userRoleService: UserRoleService,
-    private toast: ToastService,
-    private httpClient: HttpClient) {
+    private toast: ToastService) {
     if (data.user.type !== 'employee') {
       this.userService.getUser(data.user.id).subscribe(res => {
         this.selectedMember = res

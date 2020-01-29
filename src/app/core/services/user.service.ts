@@ -24,8 +24,24 @@ export class UserService {
         return this._httpClient.put<User>(`${environment.apiUrl}/User/updateUser`, user)
     }
 
+    createUser(user){
+        return this._httpClient.post<any>(`${environment.apiUrl}/User`, user)
+    }
+
+    createEmployee(employee){
+        return this._httpClient.post<any>(`${environment.apiUrl}/Employee`, employee)
+    }
+
+    deleteUser(id: number){
+        return this._httpClient.delete<User>(`${environment.apiUrl}/User/${id}`)     
+    }
+
     updateEmployee(employee: Employee) {
         return this._httpClient.put<Employee>(`${environment.apiUrl}/Employee/`, employee)
+    }
+
+    deleteEmployee(id: number){
+        return this._httpClient.delete<Employee>(`${environment.apiUrl}/Employee/${id}`)     
     }
 
     getEmployee(id) {

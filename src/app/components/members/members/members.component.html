@@ -1,3 +1,6 @@
+<button (click)="newMember()" mat-icon-button class="floatingActionButton">
+    <mat-icon>person_add</mat-icon>
+</button>
 <div class="container backgroundContainer">
     <div style="display: flex; justify-content: space-between;">
         <h3>Gebruikers</h3>
@@ -29,8 +32,7 @@
             <th style="text-align: right;" mat-header-cell *matHeaderCellDef> Acties </th>
             <td style="text-align: right;" mat-cell *matCellDef="let element">
                 <button (click)="open(element)" mat-icon-button>
-                    <svg-icon src="../assets/icons/open.svg" [applyCss]="true"
-                      class="svgIconColor"></svg-icon>
+                    <svg-icon src="../assets/icons/open.svg" [applyCss]="true" class="svgIconColor"></svg-icon>
                 </button>
             </td>
         </ng-container>
