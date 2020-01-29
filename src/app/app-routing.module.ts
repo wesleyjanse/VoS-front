@@ -7,6 +7,7 @@ import { MembersComponent } from './components/members/members/members.component
 import { LoginComponent } from './security/login/login.component';
 import { EditMemberComponent } from './components/members/edit-member/edit-member.component';
 import { EditEmployeeComponent } from './components/members/edit-employee/edit-employee.component';
+import { LogsComponent } from './components/logfiles/logs/logs.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'livestream', component: LivestreamComponent},
   { path: 'violations', component: ViolationComponent},
+  { path: 'logs', component: LogsComponent},
 
   //Members & Employees
   { path: 'members', component: MembersComponent},

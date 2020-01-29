@@ -7,7 +7,12 @@ import { EditMemberComponent } from './edit-member/edit-member.component';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-
+import { UserRoleService } from 'src/app/core/services/userRole.service';
+import { ToastService, ToastModule } from 'src/app/toast';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ConfirmModelComponent } from 'src/app/shared/components/confirm-model/confirm-model.component';
+import { NgxQRCodeModule } from 'ngx-qrcode2';    
+import { MemberDialogComponent } from 'src/app/shared/components/member-dialog/member-dialog.component';
 
 @NgModule({
   declarations: [MembersComponent, EditMemberComponent, EditEmployeeComponent],
@@ -21,10 +26,19 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     MatTabsModule,
     MatButtonModule,
     ReactiveFormsModule,
-    AngularSvgIconModule
+    AngularSvgIconModule,
+    ToastModule,
+    SharedModule,
+    NgxQRCodeModule
   ],
   providers: [
-    UserService
+    UserService,
+    UserRoleService,
+    ToastService
+  ],
+  entryComponents: [
+    ConfirmModelComponent,
+    MemberDialogComponent
   ]
 })
 export class MembersModule { }

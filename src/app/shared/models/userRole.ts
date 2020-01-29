@@ -1,6 +1,6 @@
 export class UserRole{
 
     userRoleID: number;
-    roleName: String;
+    roleName: string;
 
 }

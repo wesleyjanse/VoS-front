@@ -1,1 +1,31 @@
-<p>edit-employee works!</p>
+<div class="container backgroundContainer">
+    <button mat-flat-button (click)="back()"> <img src="../../../../assets/icons/backarrow.svg" alt="arrow"> Ga
+        terug</button>
+    <div *ngIf="error" class="text-danger font-weight-bold mb-3 mb-0">{{error}}</div>
+    <form [formGroup]="memberForm" (ngSubmit)="onSubmit()" class="w-100 mt-4">
+        <div class="form-group">
+            <label for="firstname">Voornaam <span style="font-size: 10px; opacity: 75%;">(verplicht)</span></label>
+            <input type="text" id="firstname" formControlName="firstname" class="form-control text-black"
+                [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" />
+            <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback text-right">
+                <div *ngIf="f.firstname.errors.required">Wat is de voornaam?</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastname">Achternaam <span style="font-size: 10px; opacity: 75%;">(verplicht)</span></label>
+            <input type="text" id="lastname" formControlName="lastname" class="form-control text-black"
+                [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" />
+            <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback text-right">
+                <div *ngIf="f.lastname.errors.required">Wat is de achternaam?</div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-5">
+            <button style="border-color: #b668b7; color: #505050;" mat-stroked-button [disabled]="loading && submitted"
+                type="submit" id="submitButton">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+                Opslaan <mat-icon>save_alt</mat-icon>
+            </button>
+        </div>
+    </form>
+</div>

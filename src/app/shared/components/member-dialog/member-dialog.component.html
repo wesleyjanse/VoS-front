@@ -1,0 +1,18 @@
+<div class="p-2">
+    <div class="w-100 text-center">
+        <svg-icon src="../assets/icons/user.svg" [applyCss]="true" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon>
+    </div>
+    <h1 class="text-center" mat-dialog-title>{{data.user.firstname}} {{data.user.name}}</h1>
+    <div style="font-family: 'Varela Round', sans-serif; margin-bottom: 5px;" mat-dialog-content>
+        <mat-tab-group>
+            <mat-tab label="Details"> Details </mat-tab>
+            <mat-tab label="Qr-code"> Qr-code </mat-tab>
+          </mat-tab-group>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-flat-button style="background-color: #F25C19; color: #fff;" (click)="onNoClick()"
+            cdkFocusInitial>Nee</button> &nbsp;
+        <button mat-flat-button style="background-color: #b668b7; color: #fff;"
+            (click)="dialogRef.close(true)">Ja</button>
+    </div>
+</div>

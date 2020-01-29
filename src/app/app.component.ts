@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './security/authentication.service';
 import { User } from './shared/models/user';
 import { Router } from '@angular/router';
+import { ToastService } from './toast/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   currentUser: User;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router){
+  constructor(private toast: ToastService, private authenticationService: AuthenticationService, private router: Router){
     this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user
       if (user != null) {

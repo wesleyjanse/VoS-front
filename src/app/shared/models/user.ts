@@ -16,6 +16,8 @@ export class User {
     name: string;
     userRole: UserRole;
 
+    userSettings: User;
     token?: string;
+    password?: string;
   }
   

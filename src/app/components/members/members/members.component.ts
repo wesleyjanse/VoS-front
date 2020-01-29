@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/shared/models/user';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { DataTableModel } from 'src/app/shared/models/dataTableModel';
 import { Router } from '@angular/router';
+import { MemberDialogComponent } from 'src/app/shared/components/member-dialog/member-dialog.component';
 
 @Component({
   selector: 'app-members',
@@ -14,11 +15,11 @@ export class MembersComponent implements OnInit {
   data = [];
   users: User[];
   dataSource;
-  displayedColumns: string[] = ['Id', 'Firstname', 'Lastname', 'Type','Actions'];
+  displayedColumns: string[] = ['Id', 'Firstname', 'Lastname', 'Type', 'Actions'];
   loading = false;
 
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(public dialog: MatDialog, private userService: UserService, private router: Router) {
     this.loading = true;
     this.dataSource = new MatTableDataSource([]);
     this.userService.getUsers().subscribe(res => {
@@ -28,7 +29,7 @@ export class MembersComponent implements OnInit {
           id: user.userID,
           name: user.name,
           firstname: user.firstname,
-          type: 'user'
+          type: user.userRole.roleName
         }
         this.data.push(temp);
       })
@@ -43,7 +44,7 @@ export class MembersComponent implements OnInit {
           this.data.push(temp);
         })
         this.dataSource = new MatTableDataSource<User>(this.data.filter(user => {
-          return user.type == "user" ? user : null
+          return user.type != "employee" ? user : null
         }));
         this.loading = false;
       })
@@ -58,19 +59,49 @@ export class MembersComponent implements OnInit {
       this.dataSource = new MatTableDataSource<User>(this.data);
     } else {
       this.dataSource = new MatTableDataSource<User>(this.data.filter(user => {
-        return user.type == "user" ? user : null
+        return user.type != "employee" ? user : null
       }));
     }
   }
 
-  delete(element) {
-    console.log(element)
+  open(element) {
+    const dialogRef = this.dialog.open(MemberDialogComponent, {
+      width: 'fit-content',
+      data: {
+        user: element,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          
+        }
+      }
+    );
+  }
+
+  createQr(element) {
+    const dialogRef = this.dialog.open(MemberDialogComponent, {
+      width: 'fit-content',
+      data: {
+        user: element,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          
+        }
+      }
+    );
   }
 
   edit(element) {
     // console.log(element)
     var temp;
-    if (element.type == "user") {
+    if (element.type != "employee") {
       // this.userService.getUser(element.id).subscribe(res => {
       //   temp = res
       //   console.log(res)

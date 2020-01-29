@@ -10,21 +10,33 @@ import { Employee } from 'src/app/shared/models/employee';
 @Injectable()
 export class UserService {
 
-  constructor(private _httpClient: HttpClient) { }
+    constructor(private _httpClient: HttpClient) { }
 
-  getUsers(): Observable<User[]> {
-    return this._httpClient.get<User[]>(`${environment.apiUrl}/User`);
-  }
+    getUsers(): Observable<User[]> {
+        return this._httpClient.get<User[]>(`${environment.apiUrl}/User`);
+    }
 
-  getUser(id){
-    return this._httpClient.get<User>(`${environment.apiUrl}/User/` + id);
-  }
+    getUser(id) {
+        return this._httpClient.get<User>(`${environment.apiUrl}/User/` + id);
+    }
 
-  getEmployee(id){
-    return this._httpClient.get<User>(`${environment.apiUrl}/Employee/` + id);
-  }
+    updateUser(user: User) {
+        return this._httpClient.put<User>(`${environment.apiUrl}/User/updateUser`, user)
+    }
 
-  getEmployees(): Observable<Employee[]> {
-    return this._httpClient.get<Employee[]>(`${environment.apiUrl}/Employee`);
-  }
+    updateEmployee(employee: Employee) {
+        return this._httpClient.put<Employee>(`${environment.apiUrl}/Employee/`, employee)
+    }
+
+    getEmployee(id) {
+        return this._httpClient.get<Employee>(`${environment.apiUrl}/Employee/` + id);
+    }
+
+    getEmployees(): Observable<Employee[]> {
+        return this._httpClient.get<Employee[]>(`${environment.apiUrl}/Employee`);
+    }
+
+    resetPaswoord(id: number){
+        return this._httpClient.put<number>(`${environment.apiUrl}/User/resetPassword?userID=${id}`, null);
+    }
 }

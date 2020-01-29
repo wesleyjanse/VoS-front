@@ -14,11 +14,12 @@ import { ViolationModule } from './components/violation/violation.module';
 import { MembersModule } from './components/members/members.module';
 import { SecurityModule } from './security/security.module';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ToastModule, ToastService } from './toast';
+import { LogsModule } from './components/logfiles/logs.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     HttpClientModule,
@@ -38,9 +39,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatToolbarModule,
     MatMenuModule,
     MembersModule,
-    SecurityModule
+    LogsModule,
+    SecurityModule,
+    ToastModule.forRoot()
   ],
   providers: [
+    ToastService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

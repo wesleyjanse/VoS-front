@@ -1,0 +1,12 @@
+<div class="p-2">
+    <h1 mat-dialog-title>{{data.title}}</h1>
+    <div style="font-family: 'Varela Round', sans-serif; margin-bottom: 5px;" mat-dialog-content>
+        <p>{{data.info}}</p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-flat-button style="background-color: #F25C19; color: #fff;" (click)="onNoClick()"
+            cdkFocusInitial>Nee</button> &nbsp;
+        <button mat-flat-button style="background-color: #b668b7; color: #fff;"
+            (click)="dialogRef.close(true)">Ja</button>
+    </div>
+</div>
