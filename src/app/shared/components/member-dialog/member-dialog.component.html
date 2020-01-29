@@ -4,11 +4,12 @@
         </svg-icon>
     </div>
     <h1 class="text-center mt-2" mat-dialog-title>{{data.user.firstname}} {{data.user.name}} <br />
-        <p class="text-center m-0 p-0" style="font-size: 16px;">{{data.user.type != "employee"? data.user.type : 'Werknemer'}}</p>
+        <p class="text-center m-0 p-0" style="font-size: 16px;">
+            {{data.user.type != "employee"? data.user.type : 'Werknemer'}}</p>
     </h1>
     <div style="font-family: 'Varela Round', sans-serif; margin-bottom: 5px;" mat-dialog-content>
         <mat-tab-group>
-            <mat-tab  label="Details">
+            <mat-tab label="Details">
                 <form [formGroup]="memberForm" (ngSubmit)="onSubmit()" class="w-100 mt-4">
                     <div class="form-group">
                         <label for="firstname">Voornaam <span
@@ -64,11 +65,12 @@
                     </div>
                 </form>
             </mat-tab>
-            <mat-tab label="Qr-code"> 
+            <mat-tab label="Qr-code">
                 <div class="d-flex flex-column align-items-center">
-                    <img class="mt-3" style="max-width: 150px;" src="../assets/images/qr.png" alt="qr">
-                    <button mat-flat-button><img src="../assets/icons/download.svg" alt="download"> Download</button>
-                </div>    
+                    <ngx-qrcode id="img" [qrc-value]="qrCode" qrc-class="aclass" qrc-errorCorrectionLevel="L">
+                    </ngx-qrcode>
+                    <button (click)="download()" mat-flat-button><img src="../assets/icons/download.svg" alt="download"> Download</button>
+                </div>
             </mat-tab>
         </mat-tab-group>
     </div>

@@ -75,6 +75,7 @@ export class MembersComponent implements OnInit {
   open(element) {
     const dialogRef = this.dialog.open(MemberDialogComponent, {
       data: {
+        width: '350px',
         user: element,
       }
     });

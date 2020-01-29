@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { DialogData } from 'src/app/components/violation/violation/violation.component';
+// import { DialogData } from 'src/app/components/violation/violation/violation.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -9,6 +9,11 @@ import { User } from '../../models/user';
 import { ConfirmModelComponent } from '../confirm-model/confirm-model.component';
 import { ToastService } from 'src/app/toast';
 import { Employee } from '../../models/employee';
+import { DataTableModel } from '../../models/dataTableModel';
+
+export interface DialogData {
+  user: DataTableModel;
+}
 
 @Component({
   selector: 'app-member-dialog',
@@ -21,8 +26,11 @@ export class MemberDialogComponent implements OnInit {
   loading = false;
   submitted = false;
   userRoles = []
+  qrCode;
+
 
   ngOnInit() {
+    this.qrCode = this.data.user.id.toString();
     if (this.data.user.type !== 'employee') {
       this.memberForm = this.fb.group({
         firstname: ['', [Validators.required]],
@@ -36,7 +44,11 @@ export class MemberDialogComponent implements OnInit {
         lastname: ['', [Validators.required]],
       });
     }
+  }
 
+  href: string;
+  download(){
+    this.href = document.getElementsByTagName('img')[1].src;
   }
 
   memberForm: FormGroup;
