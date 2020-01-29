@@ -2,30 +2,48 @@
     <div style="display: flex; justify-content: space-between;">
         <h3>Logging</h3>
     </div>
-    <div style="display: flex; justify-content: center;">
+    <div style="display: flex; justify-content: center;" *ngIf="!loadingCount">
 
         <div class="item">
-            <div class="logTypeNumber"
-                [style.background-color]="'#E44A37'">1</div>
+            <div class="logTypeNumber" [style.background-color]="'#E44A37'">{{logCountByType[0].count}}</div>
             <span class="caption">Error</span>
         </div>
         <div class="item">
-            <div class="logTypeNumber"
-                [style.background-color]="'#ED8332'">1</div>
+            <div class="logTypeNumber" [style.background-color]="'#ED8332'">{{logCountByType[3].count}}</div>
             <span class="caption">Warning</span>
         </div>
         <div class="item">
-            <div class="logTypeNumber"
-                [style.background-color]="'#23C7B8'">1</div>
+            <div class="logTypeNumber" [style.background-color]="'#23C7B8'">{{logCountByType[2].count}}</div>
             <span class="caption">Success</span>
         </div>
         <div class="item">
-            <div class="logTypeNumber"
-                [style.background-color]="'#43A5DE'">1</div>
+            <div class="logTypeNumber" [style.background-color]="'#43A5DE'">{{logCountByType[1].count}}</div>
             <span class="caption">Info</span>
         </div>
     </div>
     <div>
-        content here
+        <table mat-table [dataSource]="dataSource" *ngIf="!loadingLogs" class="w-100 table">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="Type">
+                <th mat-header-cell *matHeaderCellDef> Type </th>
+                <td mat-cell *matCellDef="let element"> {{element.logItemType.logItemTypeName}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Tijd">
+                <th mat-header-cell *matHeaderCellDef> Tijd </th>
+                <td mat-cell *matCellDef="let element"> {{ moment(element.date).format('LLL')}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="Bericht">
+                <th mat-header-cell *matHeaderCellDef> Bericht </th>
+                <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: false"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
     </div>
 </div>
