@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ConfirmModelComponent } from 'src/app/shared/components/confirm-model/confirm-model.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';    
 import { MemberDialogComponent } from 'src/app/shared/components/member-dialog/member-dialog.component';
+import { CreateFormComponent } from 'src/app/shared/components/create-form/create-form.component';
 
 @NgModule({
   declarations: [MembersComponent],
@@ -37,7 +38,8 @@ import { MemberDialogComponent } from 'src/app/shared/components/member-dialog/m
   ],
   entryComponents: [
     ConfirmModelComponent,
-    MemberDialogComponent
+    MemberDialogComponent,
+    CreateFormComponent
   ]
 })
 export class MembersModule { }

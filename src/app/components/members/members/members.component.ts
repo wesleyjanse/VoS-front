@@ -5,6 +5,7 @@ import { MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { DataTableModel } from 'src/app/shared/models/dataTableModel';
 import { Router } from '@angular/router';
 import { MemberDialogComponent } from 'src/app/shared/components/member-dialog/member-dialog.component';
+import { CreateFormComponent } from 'src/app/shared/components/create-form/create-form.component';
 
 @Component({
   selector: 'app-members',
@@ -70,6 +71,22 @@ export class MembersComponent implements OnInit {
         return user.type != "employee" ? user : null
       }));
     }
+  }
+
+  newMember(){
+    const dialogRef = this.dialog.open(CreateFormComponent, {
+      data: {
+        width: '350px',
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          this.ngOnInit();
+        }
+      }
+    );
   }
 
   open(element) {

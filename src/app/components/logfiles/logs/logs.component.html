@@ -4,19 +4,19 @@
     </div>
     <div style="display: flex; justify-content: center;" *ngIf="!loadingCount">
 
-        <div class="item">
+        <div class="item d-flex justify-content-center align-items-center">
             <div class="logTypeNumber" [style.background-color]="'#E44A37'">{{logCountByType[0].count}}</div>
             <span class="caption">Error</span>
         </div>
-        <div class="item">
+        <div class="item d-flex justify-content-center align-items-center">
             <div class="logTypeNumber" [style.background-color]="'#ED8332'">{{logCountByType[3].count}}</div>
             <span class="caption">Warning</span>
         </div>
-        <div class="item">
+        <div class="item d-flex justify-content-center align-items-center">
             <div class="logTypeNumber" [style.background-color]="'#23C7B8'">{{logCountByType[2].count}}</div>
             <span class="caption">Success</span>
         </div>
-        <div class="item">
+        <div class="item d-flex justify-content-center align-items-center">
             <div class="logTypeNumber" [style.background-color]="'#43A5DE'">{{logCountByType[1].count}}</div>
             <span class="caption">Info</span>
         </div>
