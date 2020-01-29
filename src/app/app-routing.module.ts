@@ -5,8 +5,6 @@ import { LivestreamComponent } from './components/livestream/livestream/livestre
 import { ViolationComponent } from './components/violation/violation/violation.component';
 import { MembersComponent } from './components/members/members/members.component';
 import { LoginComponent } from './security/login/login.component';
-import { EditMemberComponent } from './components/members/edit-member/edit-member.component';
-import { EditEmployeeComponent } from './components/members/edit-employee/edit-employee.component';
 import { LogsComponent } from './components/logfiles/logs/logs.component';
 import { ReportingComponent } from './components/reporting/reporting/reporting.component';
 import { CamerasComponent } from './components/cameras/cameras/cameras.component';
@@ -27,8 +25,6 @@ const routes: Routes = [
 
   //Members & Employees
   { path: 'members', component: MembersComponent},
-  { path: 'members/:id/edit', component: EditMemberComponent},
-  { path: 'employees/:id/edit', component: EditEmployeeComponent},
 
 ];
 

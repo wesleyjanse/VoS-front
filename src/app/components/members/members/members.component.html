@@ -2,7 +2,7 @@
     <div style="display: flex; justify-content: space-between;">
         <h3>Gebruikers</h3>
         <p>
-            <mat-slide-toggle (change)="onChange($event)">Toon werknemers</mat-slide-toggle>
+            <mat-slide-toggle unchecked (change)="onChange($event)">Toon werknemers</mat-slide-toggle>
         </p>
     </div>
     <div *ngIf="loading" style="background-color: white; text-align: center;">
@@ -28,14 +28,9 @@
         <ng-container style="text-align: right;" matColumnDef="Actions" style="text-align: right;">
             <th style="text-align: right;" mat-header-cell *matHeaderCellDef> Acties </th>
             <td style="text-align: right;" mat-cell *matCellDef="let element">
-                <button *ngIf="element.type == 'employee'" (click)="createQr(element)" mat-stroked-button style="border-color: #b668b7; color: #505050;">
-                    <svg-icon src="../assets/icons/qr-code.svg" [applyCss]="true" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon>
-                </button> &nbsp;
-                <button (click)="edit(element)" mat-stroked-button style="border-color: #F25C19; color: #505050;">
-                    <mat-icon>edit</mat-icon>
-                </button> &nbsp;
-                <button (click)="open(element)" mat-stroked-button style="border-color: #b668b7; color: #505050;">
-                    <mat-icon>remove_red_eye</mat-icon>
+                <button (click)="open(element)" mat-icon-button>
+                    <svg-icon src="../assets/icons/open.svg" [applyCss]="true"
+                      class="svgIconColor"></svg-icon>
                 </button>
             </td>
         </ng-container>

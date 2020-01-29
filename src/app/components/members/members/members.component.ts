@@ -20,8 +20,13 @@ export class MembersComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, private userService: UserService, private router: Router) {
+  }
+
+  ngOnInit() {
     this.loading = true;
     this.dataSource = new MatTableDataSource([]);
+    this.users = []
+    this.data = []
     this.userService.getUsers().subscribe(res => {
       this.users = res;
       res.map(user => {
@@ -46,12 +51,10 @@ export class MembersComponent implements OnInit {
         this.dataSource = new MatTableDataSource<User>(this.data.filter(user => {
           return user.type != "employee" ? user : null
         }));
+        console.log(this.dataSource.data)
         this.loading = false;
       })
     })
-  }
-
-  ngOnInit() {
   }
 
   onChange(e) {
@@ -66,7 +69,6 @@ export class MembersComponent implements OnInit {
 
   open(element) {
     const dialogRef = this.dialog.open(MemberDialogComponent, {
-      width: 'fit-content',
       data: {
         user: element,
       }
@@ -75,44 +77,9 @@ export class MembersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (result) => {
         if (result) {
-          
+          this.ngOnInit();
         }
       }
     );
-  }
-
-  createQr(element) {
-    const dialogRef = this.dialog.open(MemberDialogComponent, {
-      width: 'fit-content',
-      data: {
-        user: element,
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(
-      (result) => {
-        if (result) {
-          
-        }
-      }
-    );
-  }
-
-  edit(element) {
-    // console.log(element)
-    var temp;
-    if (element.type != "employee") {
-      // this.userService.getUser(element.id).subscribe(res => {
-      //   temp = res
-      //   console.log(res)
-      // });
-      this.router.navigate([`members/${element.id}/edit`])
-    } else {
-      // this.userService.getEmployee(element.id).subscribe(res => {
-      //   temp = res
-      //   console.log(res)
-      // });
-      this.router.navigate([`employees/${element.id}/edit`])
-    }
   }
 }

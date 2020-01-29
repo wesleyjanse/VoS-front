@@ -1,14 +1,14 @@
-<div class="p-2">
+<div class="p-2 memberModal">
     <div class="w-100 text-center">
         <svg-icon src="../assets/icons/user.svg" [applyCss]="true" routerLinkActive="activeSvg" class="svgIconColor">
         </svg-icon>
     </div>
     <h1 class="text-center mt-2" mat-dialog-title>{{data.user.firstname}} {{data.user.name}} <br />
-        <p class="text-center m-0 p-0" style="font-size: 16px;">{{data.user.type}}</p>
+        <p class="text-center m-0 p-0" style="font-size: 16px;">{{data.user.type != "employee"? data.user.type : 'Werknemer'}}</p>
     </h1>
     <div style="font-family: 'Varela Round', sans-serif; margin-bottom: 5px;" mat-dialog-content>
         <mat-tab-group>
-            <mat-tab label="Details">
+            <mat-tab  label="Details">
                 <form [formGroup]="memberForm" (ngSubmit)="onSubmit()" class="w-100 mt-4">
                     <div class="form-group">
                         <label for="firstname">Voornaam <span
@@ -28,7 +28,7 @@
                             <div *ngIf="f.lastname.errors.required">Wat is de achternaam?</div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div *ngIf="selectedMember" class="form-group">
                         <label for="email">E-mailadres <span
                                 style="font-size: 10px; opacity: 75%;">(verplicht)</span></label>
                         <input type="text" id="email" formControlName="email" class="form-control text-black"
@@ -37,7 +37,7 @@
                             <div *ngIf="f.email.errors.required">Wat is het e-mailadres?</div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div *ngIf="selectedMember" class="form-group">
                         <label for="role">Functie <span
                                 style="font-size: 10px; opacity: 75%;">(verplicht)</span></label>
                         <select class="custom-select" formControlName="role" id="role">
@@ -51,12 +51,12 @@
                         </div>
                     </div>
 
-                    <div class="d-flex justify-content-between mt-5">
-                        <button style="border-color: #F25C19; color: #505050;" mat-stroked-button
+                    <div class="d-flex flex-column justify-content-between mt-4">
+                        <button *ngIf="selectedMember" style="border-color: #F25C19; color: #505050;" mat-stroked-button
                             (click)="changePassword()" type="button" id="passwordButton">
                             Wachtwoord herstellen <mat-icon>lock</mat-icon>
                         </button>
-                        <button style="border-color: #b668b7; color: #505050;" mat-stroked-button
+                        <button style="border-color: #b668b7; color: #505050; margin-top: 10px;" mat-stroked-button
                             [disabled]="loading && submitted" type="submit" id="submitButton">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
                             Opslaan <mat-icon>save_alt</mat-icon>
@@ -64,13 +64,12 @@
                     </div>
                 </form>
             </mat-tab>
-            <mat-tab label="Qr-code"> Qr-code </mat-tab>
+            <mat-tab label="Qr-code"> 
+                <div class="d-flex flex-column align-items-center">
+                    <img class="mt-3" style="max-width: 150px;" src="../assets/images/qr.png" alt="qr">
+                    <button mat-flat-button><img src="../assets/icons/download.svg" alt="download"> Download</button>
+                </div>    
+            </mat-tab>
         </mat-tab-group>
-    </div>
-    <div mat-dialog-actions>
-        <button mat-flat-button style="background-color: #F25C19; color: #fff;" (click)="onNoClick()"
-            cdkFocusInitial>Nee</button> &nbsp;
-        <button mat-flat-button style="background-color: #b668b7; color: #fff;"
-            (click)="dialogRef.close(true)">Ja</button>
     </div>
 </div>
