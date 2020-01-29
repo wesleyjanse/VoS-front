@@ -16,6 +16,7 @@ import { SecurityModule } from './security/security.module';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ToastModule, ToastService } from './toast';
 import { LogsModule } from './components/logfiles/logs.module';
+import { ReportingModule } from './components/reporting/reporting.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { LogsModule } from './components/logfiles/logs.module';
     MembersModule,
     LogsModule,
     SecurityModule,
+    ReportingModule,
     ToastModule.forRoot()
   ],
   providers: [

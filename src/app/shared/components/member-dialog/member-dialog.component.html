@@ -1,13 +1,71 @@
 <div class="p-2">
     <div class="w-100 text-center">
-        <svg-icon src="../assets/icons/user.svg" [applyCss]="true" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon>
+        <svg-icon src="../assets/icons/user.svg" [applyCss]="true" routerLinkActive="activeSvg" class="svgIconColor">
+        </svg-icon>
     </div>
-    <h1 class="text-center" mat-dialog-title>{{data.user.firstname}} {{data.user.name}}</h1>
+    <h1 class="text-center mt-2" mat-dialog-title>{{data.user.firstname}} {{data.user.name}} <br />
+        <p class="text-center m-0 p-0" style="font-size: 16px;">{{data.user.type}}</p>
+    </h1>
     <div style="font-family: 'Varela Round', sans-serif; margin-bottom: 5px;" mat-dialog-content>
         <mat-tab-group>
-            <mat-tab label="Details"> Details </mat-tab>
+            <mat-tab label="Details">
+                <form [formGroup]="memberForm" (ngSubmit)="onSubmit()" class="w-100 mt-4">
+                    <div class="form-group">
+                        <label for="firstname">Voornaam <span
+                                style="font-size: 10px; opacity: 75%;">(verplicht)</span></label>
+                        <input type="text" id="firstname" formControlName="firstname" class="form-control text-black"
+                            [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" />
+                        <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback text-right">
+                            <div *ngIf="f.firstname.errors.required">Wat is de voornaam?</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Achternaam <span
+                                style="font-size: 10px; opacity: 75%;">(verplicht)</span></label>
+                        <input type="text" id="lastname" formControlName="lastname" class="form-control text-black"
+                            [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" />
+                        <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback text-right">
+                            <div *ngIf="f.lastname.errors.required">Wat is de achternaam?</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mailadres <span
+                                style="font-size: 10px; opacity: 75%;">(verplicht)</span></label>
+                        <input type="text" id="email" formControlName="email" class="form-control text-black"
+                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback text-right">
+                            <div *ngIf="f.email.errors.required">Wat is het e-mailadres?</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Functie <span
+                                style="font-size: 10px; opacity: 75%;">(verplicht)</span></label>
+                        <select class="custom-select" formControlName="role" id="role">
+                            <option selected>Kies...</option>
+                            <ng-container *ngFor="let item of userRoles">
+                                <option [value]="item.userRoleID">{{item.roleName}}</option>
+                            </ng-container>
+                        </select>
+                        <div *ngIf="submitted && f.role.errors" class="invalid-feedback text-right">
+                            <div *ngIf="f.role.errors.required">Wat is de functie?</div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-5">
+                        <button style="border-color: #F25C19; color: #505050;" mat-stroked-button
+                            (click)="changePassword()" type="button" id="passwordButton">
+                            Wachtwoord herstellen <mat-icon>lock</mat-icon>
+                        </button>
+                        <button style="border-color: #b668b7; color: #505050;" mat-stroked-button
+                            [disabled]="loading && submitted" type="submit" id="submitButton">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+                            Opslaan <mat-icon>save_alt</mat-icon>
+                        </button>
+                    </div>
+                </form>
+            </mat-tab>
             <mat-tab label="Qr-code"> Qr-code </mat-tab>
-          </mat-tab-group>
+        </mat-tab-group>
     </div>
     <div mat-dialog-actions>
         <button mat-flat-button style="background-color: #F25C19; color: #fff;" (click)="onNoClick()"
