@@ -11,6 +11,10 @@ div.item {
     vertical-align: top;
     text-align: center;
     width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .caption {
     display: block;
