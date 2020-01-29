@@ -77,10 +77,11 @@ export class MembersComponent implements OnInit {
       // });
       this.router.navigate([`members/${element.id}/edit`])
     } else {
-      this.userService.getEmployee(element.id).subscribe(res => {
-        temp = res
-        console.log(res)
-      });
+      // this.userService.getEmployee(element.id).subscribe(res => {
+      //   temp = res
+      //   console.log(res)
+      // });
+      this.router.navigate([`employees/${element.id}/edit`])
     }
   }
 }

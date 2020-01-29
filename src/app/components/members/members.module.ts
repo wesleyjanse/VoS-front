@@ -4,10 +4,13 @@ import { MembersComponent } from './members/members.component';
 import { MatTableModule, MatPaginatorModule, MatTabsModule, MatButtonModule, MatListModule, MatIconModule, MatSlideToggleModule } from '@angular/material';
 import { UserService } from 'src/app/core/services/user.service';
 import { EditMemberComponent } from './edit-member/edit-member.component';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 
 @NgModule({
-  declarations: [MembersComponent, EditMemberComponent],
+  declarations: [MembersComponent, EditMemberComponent, EditEmployeeComponent],
   imports: [
     CommonModule,
     MatListModule,
@@ -16,7 +19,9 @@ import { EditMemberComponent } from './edit-member/edit-member.component';
     MatTableModule,
     MatPaginatorModule,
     MatTabsModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule,
+    AngularSvgIconModule
   ],
   providers: [
     UserService

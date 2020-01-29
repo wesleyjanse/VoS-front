@@ -14,6 +14,7 @@ import { ViolationModule } from './components/violation/violation.module';
 import { MembersModule } from './components/members/members.module';
 import { SecurityModule } from './security/security.module';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [

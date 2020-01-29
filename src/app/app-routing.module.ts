@@ -6,6 +6,7 @@ import { ViolationComponent } from './components/violation/violation/violation.c
 import { MembersComponent } from './components/members/members/members.component';
 import { LoginComponent } from './security/login/login.component';
 import { EditMemberComponent } from './components/members/edit-member/edit-member.component';
+import { EditEmployeeComponent } from './components/members/edit-employee/edit-employee.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,8 @@ const routes: Routes = [
   //Members & Employees
   { path: 'members', component: MembersComponent},
   { path: 'members/:id/edit', component: EditMemberComponent},
+  { path: 'employees/:id/edit', component: EditEmployeeComponent},
+
 ];
 
 @NgModule({
