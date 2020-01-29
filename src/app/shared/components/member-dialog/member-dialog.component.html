@@ -69,7 +69,10 @@
                 <div class="d-flex flex-column align-items-center">
                     <ngx-qrcode id="img" [qrc-value]="qrCode" qrc-class="aclass" qrc-errorCorrectionLevel="L">
                     </ngx-qrcode>
-                    <button (click)="download()" mat-flat-button><img src="../assets/icons/download.svg" alt="download"> Download</button>
+                    <a [href]="href" [download]="fileName">
+                        <button (click)="download()" mat-flat-button><img src="../assets/icons/download.svg"
+                                alt="download"> Download</button>
+                    </a>
                 </div>
             </mat-tab>
         </mat-tab-group>

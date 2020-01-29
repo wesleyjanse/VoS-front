@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-// import { DialogData } from 'src/app/components/violation/violation/violation.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/core/services/user.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -10,6 +9,7 @@ import { ConfirmModelComponent } from '../confirm-model/confirm-model.component'
 import { ToastService } from 'src/app/toast';
 import { Employee } from '../../models/employee';
 import { DataTableModel } from '../../models/dataTableModel';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface DialogData {
   user: DataTableModel;
@@ -27,9 +27,10 @@ export class MemberDialogComponent implements OnInit {
   submitted = false;
   userRoles = []
   qrCode;
-
+  fileName;
 
   ngOnInit() {
+    this.fileName = `Qr Code - ${this.data.user.firstname} ${this.data.user.name}`
     this.qrCode = this.data.user.id.toString();
     if (this.data.user.type !== 'employee') {
       this.memberForm = this.fb.group({
@@ -87,7 +88,8 @@ export class MemberDialogComponent implements OnInit {
     private userService: UserService,
     private fb: FormBuilder,
     private userRoleService: UserRoleService,
-    private toast: ToastService) {
+    private toast: ToastService,
+    private httpClient: HttpClient) {
     if (data.user.type !== 'employee') {
       this.userService.getUser(data.user.id).subscribe(res => {
         this.selectedMember = res
