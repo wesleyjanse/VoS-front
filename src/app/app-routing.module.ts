@@ -8,6 +8,8 @@ import { LoginComponent } from './security/login/login.component';
 import { EditMemberComponent } from './components/members/edit-member/edit-member.component';
 import { EditEmployeeComponent } from './components/members/edit-employee/edit-employee.component';
 import { LogsComponent } from './components/logfiles/logs/logs.component';
+import { ReportingComponent } from './components/reporting/reporting/reporting.component';
+import { CamerasComponent } from './components/cameras/cameras/cameras.component';
 
 
 const routes: Routes = [
@@ -20,6 +22,8 @@ const routes: Routes = [
   { path: 'livestream', component: LivestreamComponent},
   { path: 'violations', component: ViolationComponent},
   { path: 'logs', component: LogsComponent},
+  { path: 'reporting', component: ReportingComponent},
+  { path: 'cameras', component: CamerasComponent},
 
   //Members & Employees
   { path: 'members', component: MembersComponent},
