@@ -22,12 +22,12 @@
         </div>
     </div>
     <div>
-        <table mat-table [dataSource]="dataSource" *ngIf="!loadingLogs" class="w-100 table">
+        <table mat-table [dataSource]="dataSource" *ngIf="!loadingLogs" class="w-100">
 
             <!-- Position Column -->
             <ng-container matColumnDef="Type">
                 <th mat-header-cell *matHeaderCellDef> Type </th>
-                <td mat-cell *matCellDef="let element"> {{element.logItemType.logItemTypeName}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.logItemType.logItemTypeName | uppercase}} </td>
             </ng-container>
 
             <!-- Name Column -->
