@@ -49,6 +49,11 @@ export class CreateFormComponent implements OnInit {
   get f() { return this.newUserForm.controls; }
 
   onSubmit() {
+    this.submitted = true;
+    if (this.newUserForm.invalid || this.f.role.value == "Kies...") {
+      return;
+    }
+    this.loading = true;
     if (!this.newEmployee) {
       var newUser = {
         email: this.f.email.value,
@@ -63,6 +68,7 @@ export class CreateFormComponent implements OnInit {
           text: `Gebruiker aangemaakt!`,
           type: 'success',
         })
+        this.loading = false;
         this.dialogRef.close(true);
       })
     } else {
@@ -77,6 +83,7 @@ export class CreateFormComponent implements OnInit {
           text: `Medewerker aangemaakt!`,
           type: 'success',
         })
+        this.loading = false;
         this.dialogRef.close(true);
       })
     }

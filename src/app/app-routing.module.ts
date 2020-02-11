@@ -8,6 +8,7 @@ import { LoginComponent } from './security/login/login.component';
 import { LogsComponent } from './components/logfiles/logs/logs.component';
 import { ReportingComponent } from './components/reporting/reporting/reporting.component';
 import { CamerasComponent } from './components/cameras/cameras/cameras.component';
+import { SettingsComponent } from './components/settings/settings/settings.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,9 @@ const routes: Routes = [
 
   //Members & Employees
   { path: 'members', component: MembersComponent},
+
+  //Settings
+  { path: 'settings', component: SettingsComponent},
 
 ];
 

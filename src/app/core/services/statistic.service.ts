@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/security/authentication.service';
 import { User } from 'src/app/shared/models/user';
 import { Employee } from 'src/app/shared/models/employee';
 import { Statistics } from 'src/app/shared/models/stats';
+import { DayStats } from 'src/app/shared/models/DayStats';
 
 
 @Injectable()
@@ -16,5 +17,17 @@ export class StatisticService {
 
   getStatistics(): Observable<Statistics[]> {
     return this._httpClient.get<Statistics[]>(`${environment.apiUrl}/Statistics/getLastYear`);
+  }
+
+  getStatisticsById(id): Observable<Statistics> {
+    return this._httpClient.get<Statistics>(`${environment.apiUrl}/Statistics/${id}`);
+  }
+
+  getMonthStats(): Observable<DayStats[]> {
+    return this._httpClient.get<DayStats[]>(`${environment.apiUrl}/Statistics/monthStats`);
+  }
+
+  getRapportStats(): Observable<DayStats[]> {
+    return this._httpClient.get<DayStats[]>(`${environment.apiUrl}/Statistics/rapportStats`);
   }
 }
