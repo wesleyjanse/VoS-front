@@ -18,6 +18,7 @@ import { ToastModule, ToastService } from './toast';
 import { LogsModule } from './components/logfiles/logs.module';
 import { ReportingModule } from './components/reporting/reporting.module';
 import { CamerasModule } from './components/cameras/cameras.module';
+import { SettingsModule } from './components/settings/settings.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { CamerasModule } from './components/cameras/cameras.module';
     SecurityModule,
     ReportingModule,
     CamerasModule,
+    SettingsModule,
     ToastModule.forRoot()
   ],
   providers: [

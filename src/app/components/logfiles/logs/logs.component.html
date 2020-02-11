@@ -2,6 +2,9 @@
     <div style="display: flex; justify-content: space-between;">
         <h3 style="margin: 15px;">Logging</h3>
     </div>
+    <div *ngIf="loadingLogs && loadingCount" style="background-color: white; text-align: center;">
+        <img src="../../../../assets/images/cloud_load.gif" alt="loading">
+    </div>
     <div style="display: flex; justify-content: center;" *ngIf="!loadingCount">
         <div class="item d-flex justify-content-center align-items-center">
             <div class="logTypeNumber" [style.background-color]="'#E44A37'">{{logCountByType[0].count}}</div>

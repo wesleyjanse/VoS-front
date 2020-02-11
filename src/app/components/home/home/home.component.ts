@@ -4,6 +4,7 @@ import { ViolationService } from 'src/app/core/services/violation.service';
 import { CameraService } from 'src/app/core/services/camera.service';
 import { ViolationCountCamera } from 'src/app/shared/models/violationCountCamera';
 import { StatisticService } from 'src/app/core/services/statistic.service';
+import { Statistics } from 'src/app/shared/models/stats';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
 
   violationCounts: ViolationCountCamera[];
   loading = true;
+  stats: any;
   violations = [];
   detected = [];
   trucksLoaded = [];
@@ -24,8 +26,9 @@ export class HomeComponent implements OnInit {
       this.violationCounts = res;
       this.loading = false
     });
-
+    this.statService.getRapportStats().subscribe(res => this.stats = res)
   }
+
   canvas: any;
   ctx: any;
 

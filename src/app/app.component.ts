@@ -38,9 +38,11 @@ export class AppComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.letter = this.name.substr(1);
+  settings(){
+    this.router.navigate(['settings'])
+  }
+
+  ngOnInit() {
+
   }
 }
