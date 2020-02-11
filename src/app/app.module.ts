@@ -19,6 +19,8 @@ import { LogsModule } from './components/logfiles/logs.module';
 import { ReportingModule } from './components/reporting/reporting.module';
 import { CamerasModule } from './components/cameras/cameras.module';
 import { SettingsModule } from './components/settings/settings.module';
+import { NotificationService } from './core/services/notification.service';
+import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -47,10 +49,16 @@ import { SettingsModule } from './components/settings/settings.module';
     ReportingModule,
     CamerasModule,
     SettingsModule,
+    MatDialogModule,
     ToastModule.forRoot()
   ],
   providers: [
     ToastService,
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
+    NotificationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

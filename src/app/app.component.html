@@ -47,11 +47,25 @@
           Zoeken... -->
         </div>
         <div class="p-2 d-flex justify-content-center align-items-center" id="notificationholder">
-          <button mat-icon-button>
-            <mat-icon matBadge="3" matBadgeColor="warn" matBadgePosition="above after">
+          <button [matMenuTriggerFor]="notif" mat-icon-button>
+            <mat-icon [matBadge]="notifCount" matBadgeColor="warn" matBadgePosition="above after">
               notification_important
             </mat-icon>
           </button>
+          <mat-menu #notif="matMenu">
+            <div style="max-height: 200px; min-width: 500px;">
+              <button (click)="clearAll()" mat-menu-item>
+                <mat-icon>delete_sweep</mat-icon>
+                <span>Lees alle</span>
+              </button>
+              <ng-container *ngFor="let item of notifications">
+                <button *ngIf="!item.notificationSeen" (click)="navigateNotif(item)" mat-menu-item>
+                  <mat-icon>warning</mat-icon>
+                  <span>{{item.message}}</span>
+                </button>
+              </ng-container>
+            </div>
+          </mat-menu>
         </div>
         <div class="p-2">
           <button mat-flat-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu">
@@ -79,7 +93,7 @@
       </mat-toolbar>
       <div class="m-3">
         <div style="margin-top: 60px;">
-          <router-outlet ></router-outlet>
+          <router-outlet></router-outlet>
         </div>
       </div>
     </mat-sidenav-content>

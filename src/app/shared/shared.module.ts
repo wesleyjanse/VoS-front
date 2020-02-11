@@ -37,6 +37,7 @@ import { CameraDialogComponent } from './components/camera-dialog/camera-dialog.
   ],
   exports: [
     RouterModule,
+    ConfirmModelComponent
   ],
 })
 export class SharedModule { }
