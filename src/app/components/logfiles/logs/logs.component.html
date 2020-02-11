@@ -3,7 +3,6 @@
         <h3 style="margin: 15px;">Logging</h3>
     </div>
     <div style="display: flex; justify-content: center;" *ngIf="!loadingCount">
-
         <div class="item d-flex justify-content-center align-items-center">
             <div class="logTypeNumber" [style.background-color]="'#E44A37'">{{logCountByType[0].count}}</div>
             <span class="caption">Error</span>
@@ -21,8 +20,8 @@
             <span class="caption">Info</span>
         </div>
     </div>
-    <div>
-        <table mat-table [dataSource]="dataSource" *ngIf="!loadingLogs" class="w-100">
+    <div style="height: 60vh; overflow-y: scroll; overflow-x: hidden;">
+        <table  mat-table [dataSource]="dataSource" *ngIf="!loadingLogs" class="w-100">
 
             <!-- Position Column -->
             <ng-container matColumnDef="Type">

@@ -140,7 +140,8 @@ export class MemberDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.memberForm.invalid && this.f.role.value != 'Kies...') {
+    this.submitted = true;
+    if (this.memberForm.invalid || this.f.role.value != 'Kies...') {
       return;
     }
 
@@ -152,6 +153,7 @@ export class MemberDialogComponent implements OnInit {
         email: this.f.email.value,
         firstname: this.f.firstname.value,
         name: this.f.lastname.value,
+        passwordChanged: this.selectedMember.passwordChanged,
         userRole: this.userRoles.find(role => role.userRoleID == this.f.role.value),
         userSettings: this.selectedMember.userSettings,
         password: this.selectedMember.password

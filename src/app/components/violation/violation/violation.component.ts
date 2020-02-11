@@ -97,4 +97,5 @@ export class DialogDataExampleDialog {
 }
 
 export interface DialogData {
+  user: any;
 }

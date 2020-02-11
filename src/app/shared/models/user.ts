@@ -15,7 +15,7 @@ export class User {
     firstname: string;
     name: string;
     userRole: UserRole;
-
+    passwordChanged: boolean;
     userSettings: User;
     token?: string;
     password?: string;
