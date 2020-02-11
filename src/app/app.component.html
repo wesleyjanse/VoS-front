@@ -54,15 +54,21 @@
           </button>
           <mat-menu #notif="matMenu">
             <div style="max-height: 200px; min-width: 500px;">
-              <button (click)="clearAll()" mat-menu-item>
+              <button *ngIf="notifCount == 0" mat-menu-item>
+                <mat-icon>info</mat-icon>
+                <span>Er zijn geen notificaties</span>
+              </button>
+              <button *ngIf="notifCount > 1" (click)="clearAll()" mat-menu-item>
                 <mat-icon>delete_sweep</mat-icon>
                 <span>Lees alle</span>
               </button>
-              <ng-container *ngFor="let item of notifications">
-                <button *ngIf="!item.notificationSeen" (click)="navigateNotif(item)" mat-menu-item>
-                  <mat-icon>warning</mat-icon>
-                  <span>{{item.message}}</span>
-                </button>
+              <ng-container *ngIf="notifCount > 0">
+                <ng-container *ngFor="let item of notifications">
+                  <button *ngIf="!item.notificationSeen" (click)="navigateNotif(item)" mat-menu-item>
+                    <mat-icon>warning</mat-icon>
+                    <span>{{item.message}}</span>
+                  </button>
+                </ng-container>
               </ng-container>
             </div>
           </mat-menu>
