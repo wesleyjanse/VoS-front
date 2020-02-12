@@ -16,11 +16,11 @@ import { SecurityModule } from './security/security.module';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ToastModule, ToastService } from './toast';
 import { LogsModule } from './components/logfiles/logs.module';
-import { ReportingModule } from './components/reporting/reporting.module';
 import { CamerasModule } from './components/cameras/cameras.module';
 import { SettingsModule } from './components/settings/settings.module';
 import { NotificationService } from './core/services/notification.service';
 import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import { ReceptionModule } from './components/reception/reception.module';
 
 @NgModule({
   declarations: [
@@ -46,10 +46,10 @@ import {MatDialogModule, MatDialogRef} from '@angular/material/dialog';
     MembersModule,
     LogsModule,
     SecurityModule,
-    ReportingModule,
     CamerasModule,
     SettingsModule,
     MatDialogModule,
+    ReceptionModule,
     ToastModule.forRoot()
   ],
   providers: [

@@ -8,6 +8,7 @@ import { User } from 'src/app/shared/models/user';
 import { Employee } from 'src/app/shared/models/employee';
 import { Statistics } from 'src/app/shared/models/stats';
 import { DayStats } from 'src/app/shared/models/DayStats';
+import { ViolationsByMonth } from 'src/app/shared/models/violationsByMonth';
 
 
 @Injectable()
@@ -30,4 +31,9 @@ export class StatisticService {
   getRapportStats(): Observable<DayStats[]> {
     return this._httpClient.get<DayStats[]>(`${environment.apiUrl}/Statistics/rapportStats`);
   }
+
+  getViolationCountByMonth(): Observable<ViolationsByMonth[]> {
+    return this._httpClient.get<ViolationsByMonth[]>(`${environment.apiUrl}/Statistics/violationCountByMonth`);
+  }
+
 }

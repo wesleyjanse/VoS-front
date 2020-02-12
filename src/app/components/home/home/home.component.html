@@ -1,44 +1,54 @@
 <div class="container backgroundContainer">
     <div class="row">
-        <h3 style="margin-left: 15px;">Overzicht</h3>
+        <h3 style="margin-left: 40px">Overzicht</h3>
     </div>
     <div class="row">
-        <div  class="col-xl-4 col-lg-12">
+        <div style="margin-left: 0px;" class="col-6">
             <div *ngIf="stats" class="row">
-                <div class="card">
-                    <h5 style="font-size: 15px; margin: 15px 0px 0px 10px;">Overtredingen</h5>
-                    <p style="font-size: 26px; margin: 25px 0 0 10px; line-height: 30px;">{{stats.violations}}</p>
+                <div (click)="activate('showViolations')" [ngClass]="{'active': showViolations}" class="card">
+                    <h5 style="font-size: 18px; margin: 25px 0px 0px 10px;">Overtredingen</h5>
+                    <p style="font-size: 29px; margin: 30px 0 0 10px; line-height: 30px;">{{stats.violations}}</p>
                     <a routerLink="/violations"
-                        style="font-size: 10px; line-height: 12px; color: #747474;  margin: 25px 0 0 10px;">Bekijk
+                        style="font-size: 13px; line-height: 12px; color: #747474;  margin: 30px 0 0 10px;">Bekijk
                         alle</a>
                 </div>
-                <div class="card">
-                    <h5 style="font-size: 15px; margin: 15px 0px 0px 10px;">Camera's</h5>
-                    <p style="font-size: 26px; margin: 25px 0 0 10px; line-height: 30px;">{{stats.cameras}}</p>
+                <div (click)="activate('showCameraViolations')" [ngClass]="{'active': showCameraViolations}"
+                    class="card">
+                    <h5 style="font-size: 18px; margin: 25px 0px 0px 10px;">Camera's</h5>
+                    <p style="font-size: 29px; margin: 30px 0 0 10px; line-height: 30px;">{{stats.cameras}}</p>
                     <a routerLink="/cameras"
-                        style="font-size: 10px; line-height: 12px; color: #747474;  margin: 25px 0 0 10px;">Bekijk
+                        style="font-size: 13px; line-height: 12px; color: #747474;  margin: 30px 0 0 10px;">Bekijk
                         alle</a>
                 </div>
             </div>
             <div *ngIf="stats" class="row">
-                <div class="card">
-                    <h5 style="font-size: 15px; margin: 15px 0px 0px 10px;">Werknemers</h5>
-                    <p style="font-size: 26px; margin: 25px 0 0 10px; line-height: 30px;">{{stats.users}}</p>
+                <div (click)="activate('showUsers')" [ngClass]="{'active': showUsers}" class="card">
+                    <h5 style="font-size: 18px; margin: 25px 0px 0px 10px;">Werknemers</h5>
+                    <p style="font-size: 29px; margin: 30px 0 0 10px; line-height: 30px;">{{stats.users}}</p>
                     <a routerLink="/members"
-                        style="font-size: 10px; line-height: 12px; color: #747474;  margin: 25px 0 0 10px;">Bekijk
+                        style="font-size: 13px; line-height: 12px; color: #747474;  margin: 30px 0 0 10px;">Bekijk
                         alle</a>
                 </div>
-                <div class="card">
-                    <h5 style="font-size: 15px; margin: 15px 0px 0px 10px;">Aantal Logs</h5>
-                    <p style="font-size: 26px; margin: 25px 0 0 10px; line-height: 30px;">{{stats.logs}}</p>
+                <div (click)="activate('showLogs')" [ngClass]="{'active': showLogs}" class="card">
+                    <h5 style="font-size: 18px; margin: 25px 0px 0px 10px;">Aantal Logs</h5>
+                    <p style="font-size: 29px; margin: 30px 0 0 10px; line-height: 30px;">{{stats.logs}}</p>
                     <a routerLink="/logs"
-                        style="font-size: 10px; line-height: 12px; color: #747474;  margin: 25px 0 0 10px;">Bekijk
+                        style="font-size: 13px; line-height: 12px; color: #747474;  margin: 30px 0 0 10px;">Bekijk
                         alle</a>
                 </div>
             </div>
         </div>
-        <div class="col-xl-8 col-lg-12">
-            <div class="card-graph chart">
+        <div class="col-6">
+            <div class="card-graph chart chart2">
+                <div class="d-flex align-items-center flex-column pt-3 pb-3">
+                    <canvas id="myChart2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card-graph chart chart1">
                 <div class="d-flex align-items-center flex-column pt-3 pb-3">
                     <canvas id="myChart"></canvas>
                 </div>
@@ -48,5 +58,4 @@
     <!-- <div class="row mt-5">
         <h3 style="margin-left: 0px;">Overtredingen</h3>
     </div> -->
-
 </div>

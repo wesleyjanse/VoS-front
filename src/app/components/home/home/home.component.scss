@@ -1,12 +1,25 @@
 .card {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   background: #ffffff;
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   margin: 15px;
+  cursor: pointer;
+
+  &.active {
+    background-color: rgb(226, 226, 226);
+  }
 }
 
-canvas {
-  width: 600px !important;
+.chart1 {
+  canvas {
+    width: 800px !important;
+  }
 }
+
+// .chart2 {
+//   canvas {
+//     width: 800px !important;
+//   }
+// }

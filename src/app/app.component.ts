@@ -21,19 +21,29 @@ export class AppComponent implements OnInit {
   letter = '';
   isLoggedIn = false;
   currentUser: User;
+  isAdmin = false;
+  isSecurity = false;
+  isReception = false;
   notifications: Notification[];
   notifCount = 0;
   constructor(public dialog: MatDialog,
-    public dialogRef: MatDialogRef<MemberDialogComponent>,private toast: ToastService, private authenticationService: AuthenticationService, private router: Router, private notificationService: NotificationService) {
+    public dialogRef: MatDialogRef<MemberDialogComponent>, private toast: ToastService, private authenticationService: AuthenticationService, private router: Router, private notificationService: NotificationService) {
     this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user
       if (user != null) {
+        if (this.currentUser.userRole.roleName.toLowerCase() == 'admin') { this.isAdmin = true; this.isSecurity = false; this.isReception = false }
+        if (this.currentUser.userRole.roleName.toLowerCase() == 'responsible') { this.isSecurity = true; this.isAdmin = false; this.isReception = false }
+        if (this.currentUser.userRole.roleName.toLowerCase() == 'receptionist') { this.isReception = true; this.isAdmin = false; this.isSecurity = false }
         this.isLoggedIn = true;
         this.name = user.firstname;
         this.letter = this.name.substr(0, 1);
         this.getNotifications()
         if (this.router.url === 'login') {
-          this.router.navigate([{ outlets: { primary: 'home' } }])
+          if (this.isReception) {
+            this.router.navigate([{ outlets: { primary: 'reception' } }])
+          } else {
+            this.router.navigate([{ outlets: { primary: 'home' } }])
+          }
         }
       } else {
         this.router.navigate([{ outlets: { login: 'login' } }])
@@ -72,7 +82,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  clearAll(){
+  clearAll() {
     const dialogRef = this.dialog.open(ConfirmModelComponent, {
       width: '400px',
       data: {
@@ -94,7 +104,7 @@ export class AppComponent implements OnInit {
         }
       }
     );
-   
+
   }
 
   ngOnInit() {

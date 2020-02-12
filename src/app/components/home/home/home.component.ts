@@ -20,7 +20,16 @@ export class HomeComponent implements OnInit {
   detected = [];
   trucksLoaded = [];
   trucksUnloaded = [];
-  maanden = [];
+  maanden = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+  dataTabel = {};
+
+  showViolations = true;
+  showCameraViolations = false;
+  showUsers = false;
+  showLogs = false;
+
   constructor(private violationService: ViolationService, private cameraService: CameraService, private statService: StatisticService) {
     this.violationService.getViolationCountByCamera().subscribe(res => {
       this.violationCounts = res;
@@ -29,64 +38,137 @@ export class HomeComponent implements OnInit {
     this.statService.getRapportStats().subscribe(res => this.stats = res)
   }
 
+  addData(chart, label, data) {
+    console.log(chart.data.labels.length)
+    chart.data.labels = [];
+    chart.data.labels = label;
+    chart.data.datasets = []
+    chart.data.datasets = data
+    chart.update();
+  }
+
+  
+  activate(type) {
+    console.log(type)
+    switch (type) {
+      case 'showViolations':
+        this.showViolations = true;
+        this.showCameraViolations = false;
+        this.showUsers = false;
+        this.showLogs = false;
+
+        this.statService.getViolationCountByMonth().subscribe(res => {
+          console.log(res);
+          var maanden = []
+          var data = []
+          res.map(
+            item => {
+              maanden.push(this.maanden[item.month - 1])
+              data.push(item.count)
+            }
+          )
+
+
+          var dataSets = [{
+            label: "Overtreding afgelopen jaar",
+            data: data,
+            backgroundColor: '#B668B7',
+          }]
+          this.addData(this.myChart, maanden, dataSets)
+        })
+        break;
+      case 'showCameraViolations':
+        this.showViolations = false;
+        this.showCameraViolations = true;
+        this.showUsers = false;
+        this.showLogs = false;
+
+        break;
+
+      case 'showUsers':
+        this.showViolations = false;
+        this.showCameraViolations = false;
+        this.showUsers = true;
+        this.showLogs = false;
+        break; case 'showLogs':
+        this.showViolations = false;
+        this.showCameraViolations = false;
+        this.showUsers = false;
+        this.showLogs = true;
+        break;
+    }
+  }
+
+
+  myChart: Chart;
+  myChart2: Chart;
   canvas: any;
+  canvas2: any;
   ctx: any;
+  ctx2 : any;
 
   ngAfterViewInit() {
+
+
+    this.canvas2 = document.getElementById('myChart2');
     this.canvas = document.getElementById('myChart');
     this.ctx = this.canvas.getContext('2d');
-    this.statService.getStatistics().subscribe(stats => {
-      var tempMaanden =  ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep" ,"Okt", "Nov", "Dec"];
-      stats.map(stat => {
-        this.violations.push(stat.totalViolationCount);
-        this.detected.push(stat.employeesDetected);
-        this.trucksLoaded.push(stat.trucksLoaded);
-        this.trucksUnloaded.push(stat.trucksUnloaded);
-        this.maanden.push(`${tempMaanden[stat.month-1]} ${stat.year}`);
-      })
-      let myChart = new Chart(this.ctx, {
-        type: 'line',
-        data: {
-          labels: this.maanden,
-          datasets: [{
-            label: "Aantal overtredingen",
-            data: this.violations,
-            fill: false,
-            borderColor: '#B668B7',
-            borderWidth: 0,
-          }, {
-            label: "Aantal gedetecteerd",
-            data: this.detected,
-            fill: false,
-            borderColor: '#F25C19',
-            borderWidth: 0,
-          }, {
-            label: "Aantal trucks ingeladen",
-            data: this.trucksLoaded,
-            fill: false,
-            borderColor: '#D18889',
-            borderWidth: 0,
-          }, {
-            label: "Aantal trucks uitgeladen",
-            data: this.trucksUnloaded,
-            fill: false,
-            borderColor: '#B774AD',
-            borderWidth: 0,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          }
-        }
-      });
+    this.ctx2 = this.canvas2.getContext('2d');
+
+    this.myChart2 = new Chart(this.ctx2, {
+      type: 'pie',
+      data: {
+        labels: ['OK', 'WARNING', 'CRITICAL', 'UNKNOWN'],
+        datasets: [{
+          label: '# of Tomatoes',
+          data: [12, 19, 3, 5],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+         cutoutPercentage: 40,
+        responsive: false,
+    
+      }
     })
+
+    this.myChart = new Chart(this.ctx, {
+      type: 'line',
+      data: {
+        labels: [] = ['test1', 'test2'],
+        datasets: [{
+          label: '# of Total Messages',
+          data: [] = [],
+          backgroundColor: '#ffe4c9',
+
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+
+    this.activate('showViolations')
 
   }
 

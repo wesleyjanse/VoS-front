@@ -6,31 +6,31 @@
           style="width: 190px; margin: auto; display: block;">
       </div>
       <mat-action-list style="margin-top: 100px;">
-        <a [routerLink]="['home']" routerLinkActive="active" mat-list-item>
+        <a *ngIf="isReception" [routerLink]="['reception']" routerLinkActive="active" mat-list-item>
+          <svg-icon style="margin-left: 20px;" src="../assets/icons/reception.svg" [applyCss]="true"
+            [svgStyle]="{ 'width.px':50 }" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon> Inchecken
+        </a>
+        <a *ngIf="isAdmin || isSecurity" [routerLink]="['home']" routerLinkActive="active" mat-list-item>
           <svg-icon style="margin-left: 20px;" src="../assets/icons/layer.svg" [applyCss]="true"
             [svgStyle]="{ 'width.px':50 }" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon> Overzicht
         </a>
-        <a routerLink="livestream" routerLinkActive="active" mat-list-item>
+        <a *ngIf="isAdmin || isSecurity" routerLink="livestream" routerLinkActive="active" mat-list-item>
           <svg-icon style="margin-left: 20px;" src="../assets/icons/stream.svg" [applyCss]="true"
             [svgStyle]="{ 'width.px':50 }" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon> Livestreams
         </a>
-        <a routerLink="reporting" routerLinkActive="active" mat-list-item>
-          <svg-icon style="margin-left: 20px;" src="../assets/icons/report.svg" [applyCss]="true"
-            [svgStyle]="{ 'width.px':50 }" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon> Reports
-        </a>
-        <a routerLink="violations" routerLinkActive="active" mat-list-item>
+        <a *ngIf="isAdmin || isSecurity" routerLink="violations" routerLinkActive="active" mat-list-item>
           <svg-icon style="margin-left: 20px;" src="../assets/icons/warning.svg" [applyCss]="true"
             [svgStyle]="{ 'width.px':50 }" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon> Overtredingen
         </a>
-        <a routerLink="logs" routerLinkActive="active" mat-list-item>
+        <a *ngIf="isAdmin || isSecurity" routerLink="logs" routerLinkActive="active" mat-list-item>
           <svg-icon style="margin-left: 20px;" src="../assets/icons/logs.svg" [applyCss]="true"
             [svgStyle]="{ 'width.px':50 }" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon> Logs
         </a>
-        <a routerLink="cameras" routerLinkActive="active" mat-list-item>
+        <a *ngIf="isAdmin" routerLink="cameras" routerLinkActive="active" mat-list-item>
           <svg-icon style="margin-left: 20px;" src="../assets/icons/cam.svg" [applyCss]="true"
             [svgStyle]="{ 'width.px':50 }" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon> Camera's
         </a>
-        <a routerLink="members" routerLinkActive="active" mat-list-item>
+        <a *ngIf="isAdmin" routerLink="members" routerLinkActive="active" mat-list-item>
           <svg-icon style="margin-left: 20px;" src="../assets/icons/users.svg" [applyCss]="true"
             [svgStyle]="{ 'width.px':50 }" routerLinkActive="activeSvg" class="svgIconColor"></svg-icon> Gebruikers
         </a>
@@ -42,9 +42,6 @@
           <mat-icon>menu</mat-icon>
         </button>
         <div class="mr-auto p-2 ml-4" style="font-size: 16px;">
-          <!-- <svg-icon src="../assets/icons/search.svg" [applyCss]="true" [svgStyle]="{ 'fill': '#505050' }">
-          </svg-icon>
-          Zoeken... -->
         </div>
         <div class="p-2 d-flex justify-content-center align-items-center" id="notificationholder">
           <button [matMenuTriggerFor]="notif" mat-icon-button>
