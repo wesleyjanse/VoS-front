@@ -47,35 +47,12 @@ export class HomeComponent implements OnInit {
       }
     })
 
-    this.statService.getCameraPercentage().subscribe(res => {
-      var labels = []
-      var percentages = []
 
-      res.map(item => {
-        labels.push(item.cameraName)
-        percentages.push(item.percentage)
-      })
-
-      var dataSets = [{
-        data: percentages,
-        backgroundColor: [
-          'rgba(229,87,23, 0.5)',
-          'rgba(182,104,183, 0.5)',
-        ],
-        borderColor: [
-          'rgba(229,87,23,1)',
-          'rgba(182,104,183, 1)',
-        ],
-        borderWidth: 1
-      }]
-
-      this.addData(this.myChart2, labels, dataSets)
-    });
     this.statService.getRapportStats().subscribe(res => this.stats = res);
   }
 
   addData(chart, label, data) {
-    if (this.currentUser.passwordChanged){
+    if (this.currentUser.passwordChanged) {
       chart.data.labels = [];
       chart.data.labels = label;
       chart.data.datasets = []
@@ -92,24 +69,53 @@ export class HomeComponent implements OnInit {
         this.showCameraViolations = false;
         this.showUsers = false;
         this.showLogs = false;
-
         this.statService.getStatistics().subscribe(res => {
+          var violationCount = 0;
+          var detectionCount = 0;
+          var loadingCount = 0;
+          var unloadedCount = 0;
+          // Graph 1
           var maanden = []
-
           var violations = [];
           var detected = [];
           var trucksLoaded = [];
           var trucksUnloaded = [];
-
           res.map(
             item => {
-              maanden.push(this.maanden[item.month - 1])
+              violationCount += item.totalViolationCount,
+                detectionCount += item.employeesDetected,
+                loadingCount += item.trucksLoaded,
+                unloadedCount += item.trucksUnloaded,
+                maanden.push(this.maanden[item.month - 1])
               violations.push(item.totalViolationCount)
               detected.push(item.employeesDetected)
               trucksLoaded.push(item.trucksLoaded)
               trucksUnloaded.push(item.trucksUnloaded)
             }
           )
+
+          var labels2 = ["Overtredingen", "Detecties", "Laden", "Lossen"]
+          var counts = [violationCount, detectionCount, loadingCount, unloadedCount]
+
+          var dataSets2 = [{
+            data: counts,
+            backgroundColor: [
+              'rgba(229,87,23, 0.5)',
+              'rgba(182,104,183, 0.5)',
+              'rgba(174,60,55, 0.5)',
+              'rgba(116,36,122, 0.5)'
+            ],
+            borderColor: [
+              'rgba(229,87,23,1)',
+              'rgba(182,104,183, 1)',
+              'rgba(174,60,55, 1)',
+              'rgba(116,36,122, 1)'
+            ],
+            borderWidth: 1
+          }]
+          this.addData(this.myChart2, labels2, dataSets2)
+
+
 
           var dataSets = [{
             label: "Overtredingen",
@@ -144,6 +150,66 @@ export class HomeComponent implements OnInit {
         this.showUsers = false;
         this.showLogs = false;
 
+        this.statService.getCamStats().subscribe(res => {
+          var labels = []
+          var cam1 = []
+          var cam2 = []
+          var maanden = []
+
+          res.map(item => {
+            labels.push(item.cameraName)
+            item.cameraViolationsByMonths.map(violation => {
+              if (maanden.length < 12) {
+                maanden.push(this.maanden[violation.month - 1])
+              }
+              if (item.cameraName == "Eye cam") {
+                cam1.push(violation.count)
+              } else if (item.cameraName == "Bullet cam") {
+                cam2.push(violation.count)
+              }
+            })
+          })
+          var dataSets = [{
+            label: labels[0],
+            data: cam1,
+            borderColor: '#B668B7',
+            fill: false
+          },
+          {
+            label: labels[1],
+            data: cam2,
+            borderColor: '#E15517',
+            fill: false
+          }]
+          this.addData(this.myChart, maanden, dataSets)
+
+        })
+
+        this.statService.getCameraPercentage().subscribe(res => {
+          var labels = []
+          var percentages = []
+
+          res.map(item => {
+            labels.push(item.cameraName)
+            percentages.push(item.percentage)
+          })
+
+          var dataSets = [{
+            data: percentages,
+            backgroundColor: [
+              'rgba(229,87,23, 0.5)',
+              'rgba(182,104,183, 0.5)',
+
+            ],
+            borderColor: [
+              'rgba(229,87,23,1)',
+              'rgba(182,104,183, 1)',
+            ],
+            borderWidth: 1
+          }]
+
+          this.addData(this.myChart2, labels, dataSets)
+        });
         break;
 
       case 'showUsers':
@@ -151,28 +217,49 @@ export class HomeComponent implements OnInit {
         this.showCameraViolations = false;
         this.showUsers = true;
         this.showLogs = false;
+
         this.statService.getEmployeeStats().subscribe(res => {
+          var aantalMembers = 0;
           var maanden = []
           var data = []
 
           res.map(
             item => {
+              aantalMembers += item.count;
               maanden.push(this.maanden[item.month - 1])
               data.push(item.count)
             }
           )
 
+          var labels = ["Werknemers"]
+          var percentages = [aantalMembers]
+
+          var dataSets2 = [{
+            data: percentages,
+            backgroundColor: [
+              'rgba(229,87,23, 0.5)',
+            ],
+            borderColor: [
+              'rgba(229,87,23,1)',
+            ],
+            borderWidth: 1
+          }]
+
+          this.addData(this.myChart2, labels, dataSets2)
+
+
+
           var dataSets = [{
-            label: "Aantal werknemers per maand",
+            label: "Aantal nieuwe werknemers per maand",
             data: data,
             borderColor: '#B668B7',
             fill: false
           }]
           this.addData(this.myChart, maanden, dataSets)
         })
-        break; 
-        
-        case 'showLogs':
+        break;
+
+      case 'showLogs':
         this.showViolations = false;
         this.showCameraViolations = false;
         this.showUsers = false;
