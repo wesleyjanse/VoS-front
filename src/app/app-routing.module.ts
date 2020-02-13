@@ -11,11 +11,13 @@ import { SettingsComponent } from './components/settings/settings/settings.compo
 import { ReceptionComponent } from './components/reception/reception/reception.component';
 import { AdminGuard } from './core/guards/admin.guard';
 import { ReceptionGuard } from './core/guards/reception.guard';
+import { ResetPasswordComponent } from './security/reset-password/reset-password.component';
 
 
 const routes: Routes = [
   //Login Outlet
   { path: 'login', component: LoginComponent, outlet: "login"},
+  { path: 'resetPass', component: ResetPasswordComponent},
 
   //Main Outlet
   //Main Routes

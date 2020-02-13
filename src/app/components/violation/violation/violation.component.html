@@ -1,7 +1,5 @@
 <div class="container backgroundContainer">
-    <div class="row">
-        <h3 style="margin: 15px;">Overtredingen</h3>
-    </div>
+    <h3 style="margin: 15px;">Overtredingen</h3>
     <div class="row">
         <mat-tab-group (selectedTabChange)="getViolations($event)" style="width: 100%;">
             <div style="background-color: white; text-align: center;" *ngIf="loadingCameras">
@@ -44,7 +42,8 @@
                                         <span *ngIf="element.employeeViolations.length > 1">
                                             <button mat-button [matMenuTriggerFor]="menu">Meerdere</button>
                                             <mat-menu #menu="matMenu">
-                                                <button mat-menu-item *ngFor="let item of element.employeeViolations">{{item.employee.firstname + ' ' + item.employee.name}}</button>
+                                                <button mat-menu-item
+                                                    *ngFor="let item of element.employeeViolations">{{item.employee.firstname + ' ' + item.employee.name}}</button>
                                             </mat-menu>
                                         </span>
                                     </td>

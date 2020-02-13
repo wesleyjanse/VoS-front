@@ -1,7 +1,5 @@
 <div class="container backgroundContainer">
-    <div style="display: flex; justify-content: space-between;">
-        <h3 style="margin: 15px;">Logging</h3>
-    </div>
+    <h3 style="margin: 15px;">Logging</h3>
     <div *ngIf="loadingLogs && loadingCount" style="background-color: white; text-align: center;">
         <img src="../../../../assets/images/cloud_load.gif" alt="loading">
     </div>
@@ -24,7 +22,7 @@
         </div>
     </div>
     <div style="height: 60vh; overflow-y: scroll; overflow-x: hidden;">
-        <table  mat-table [dataSource]="dataSource" *ngIf="!loadingLogs" class="w-100">
+        <table mat-table [dataSource]="dataSource" *ngIf="!loadingLogs" class="w-100">
 
             <!-- Position Column -->
             <ng-container matColumnDef="Type">

@@ -1,10 +1,8 @@
 <div class="container backgroundContainer">
-    <div class="row">
-        <h3 style="margin-left: 40px">Overzicht</h3>
-    </div>
+    <h3 style="margin: 15px;">Overzicht</h3>
     <div class="row">
         <div style="margin-left: 0px;" class="col-6">
-            <div *ngIf="stats" class="row">
+            <div *ngIf="stats" class="row  d-flex justify-content-end align-items-end">
                 <div (click)="activate('showViolations')" [ngClass]="{'active': showViolations}" class="card">
                     <h5 style="font-size: 18px; margin: 25px 0px 0px 10px;">Overtredingen</h5>
                     <p style="font-size: 29px; margin: 30px 0 0 10px; line-height: 30px;">{{stats.violations}}</p>
@@ -21,7 +19,7 @@
                         alle</a>
                 </div>
             </div>
-            <div *ngIf="stats" class="row">
+            <div *ngIf="stats" class="row  d-flex justify-content-end align-items-end">
                 <div (click)="activate('showUsers')" [ngClass]="{'active': showUsers}" class="card">
                     <h5 style="font-size: 18px; margin: 25px 0px 0px 10px;">Werknemers</h5>
                     <p style="font-size: 29px; margin: 30px 0 0 10px; line-height: 30px;">{{stats.users}}</p>
@@ -38,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-6 d-flex justify-content-center align-items-center">
             <div class="card-graph chart chart2">
                 <div class="d-flex align-items-center flex-column pt-3 pb-3">
                     <canvas id="myChart2"></canvas>

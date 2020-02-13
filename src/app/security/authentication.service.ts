@@ -9,6 +9,8 @@ import { User } from '../shared/models/user';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
+    public isLoggedIn = new BehaviorSubject(false);
+
     public currentUser: Observable<User>;
 
     constructor(private http: HttpClient) {
@@ -52,13 +54,13 @@ export class AuthenticationService {
         return this.http.post<any>(`${environment.apiUrl}/admins`, { firstname, lastname, email, password })
     }
 
-    //   changePassword(oldpassword: string, newpassword: string) {
-    //     return this.http.put<any>(`${environment.apiUrl}/users/${this.currentUserValue._id}/password`, { password: oldpassword, newPassword: newpassword })
-    //       .pipe(map(() => this.deteleUserTokens()));
-    //   }
+      changePassword(newpassword: string) {
+        return this.http.put<any>(`${environment.apiUrl}/User/changePassword?userID=${this.currentUserValue.userID}&password=${newpassword}`, null)
+      }
 
     logout() {
         this.currentUserSubject.next(null);
+        this.isLoggedIn.next(false);
         localStorage.clear();
     }
 
@@ -76,13 +78,14 @@ export class AuthenticationService {
         });
     }
 
-    storeUser(userDetais, token) {
+    storeUser(userDetails, token) {
         const user: User = new User({
-            userID: userDetais.userID,
-            email: userDetais.email,
-            firstname: userDetais.firstname,
-            name: userDetais.name,
-            userRole: userDetais.userRole,
+            userID: userDetails.userID,
+            email: userDetails.email,
+            firstname: userDetails.firstname,
+            name: userDetails.name,
+            userRole: userDetails.userRole,
+            passwordChanged: userDetails.passwordChanged
         }, token);
 
         localStorage.setItem('currentUser', JSON.stringify(user));

@@ -5,6 +5,10 @@ import { CameraService } from 'src/app/core/services/camera.service';
 import { ViolationCountCamera } from 'src/app/shared/models/violationCountCamera';
 import { StatisticService } from 'src/app/core/services/statistic.service';
 import { Statistics } from 'src/app/shared/models/stats';
+import { CameraPercentage } from 'src/app/shared/models/cameraPercentage';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/security/authentication.service';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +18,10 @@ import { Statistics } from 'src/app/shared/models/stats';
 export class HomeComponent implements OnInit {
 
   violationCounts: ViolationCountCamera[];
+  camPercentages: CameraPercentage[] = [];
   loading = true;
   stats: any;
-  violations = [];
-  detected = [];
-  trucksLoaded = [];
-  trucksUnloaded = [];
+
   maanden = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
 
@@ -29,25 +31,59 @@ export class HomeComponent implements OnInit {
   showCameraViolations = false;
   showUsers = false;
   showLogs = false;
+  currentUser: User;
 
-  constructor(private violationService: ViolationService, private cameraService: CameraService, private statService: StatisticService) {
+  constructor(private router: Router, private violationService: ViolationService, private cameraService: CameraService, private statService: StatisticService, private authenticationService: AuthenticationService) {
     this.violationService.getViolationCountByCamera().subscribe(res => {
       this.violationCounts = res;
-      this.loading = false
+      this.loading = false;
     });
-    this.statService.getRapportStats().subscribe(res => this.stats = res)
+
+    this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = user
+      console.log(user)
+      if (!this.currentUser.passwordChanged) {
+        this.router.navigate([{ outlets: { primary: 'resetPass' } }])
+      }
+    })
+
+    this.statService.getCameraPercentage().subscribe(res => {
+      var labels = []
+      var percentages = []
+
+      res.map(item => {
+        labels.push(item.cameraName)
+        percentages.push(item.percentage)
+      })
+
+      var dataSets = [{
+        data: percentages,
+        backgroundColor: [
+          'rgba(229,87,23, 0.5)',
+          'rgba(182,104,183, 0.5)',
+        ],
+        borderColor: [
+          'rgba(229,87,23,1)',
+          'rgba(182,104,183, 1)',
+        ],
+        borderWidth: 1
+      }]
+
+      this.addData(this.myChart2, labels, dataSets)
+    });
+    this.statService.getRapportStats().subscribe(res => this.stats = res);
   }
 
   addData(chart, label, data) {
-    console.log(chart.data.labels.length)
-    chart.data.labels = [];
-    chart.data.labels = label;
-    chart.data.datasets = []
-    chart.data.datasets = data
-    chart.update();
+    if (this.currentUser.passwordChanged){
+      chart.data.labels = [];
+      chart.data.labels = label;
+      chart.data.datasets = []
+      chart.data.datasets = data
+      chart.update();
+    }
   }
 
-  
   activate(type) {
     console.log(type)
     switch (type) {
@@ -57,22 +93,47 @@ export class HomeComponent implements OnInit {
         this.showUsers = false;
         this.showLogs = false;
 
-        this.statService.getViolationCountByMonth().subscribe(res => {
-          console.log(res);
+        this.statService.getStatistics().subscribe(res => {
           var maanden = []
-          var data = []
+
+          var violations = [];
+          var detected = [];
+          var trucksLoaded = [];
+          var trucksUnloaded = [];
+
           res.map(
             item => {
               maanden.push(this.maanden[item.month - 1])
-              data.push(item.count)
+              violations.push(item.totalViolationCount)
+              detected.push(item.employeesDetected)
+              trucksLoaded.push(item.trucksLoaded)
+              trucksUnloaded.push(item.trucksUnloaded)
             }
           )
 
-
           var dataSets = [{
-            label: "Overtreding afgelopen jaar",
-            data: data,
-            backgroundColor: '#B668B7',
+            label: "Overtredingen",
+            data: violations,
+            borderColor: '#B668B7',
+            fill: false
+          },
+          {
+            label: "Detecties",
+            data: detected,
+            borderColor: '#E15517',
+            fill: false
+          },
+          {
+            label: "Laden",
+            data: trucksLoaded,
+            borderColor: '#AE3C37',
+            fill: false
+          },
+          {
+            label: "Lossen",
+            data: trucksUnloaded,
+            borderColor: '#74247A',
+            fill: false
           }]
           this.addData(this.myChart, maanden, dataSets)
         })
@@ -90,7 +151,28 @@ export class HomeComponent implements OnInit {
         this.showCameraViolations = false;
         this.showUsers = true;
         this.showLogs = false;
-        break; case 'showLogs':
+        this.statService.getEmployeeStats().subscribe(res => {
+          var maanden = []
+          var data = []
+
+          res.map(
+            item => {
+              maanden.push(this.maanden[item.month - 1])
+              data.push(item.count)
+            }
+          )
+
+          var dataSets = [{
+            label: "Aantal werknemers per maand",
+            data: data,
+            borderColor: '#B668B7',
+            fill: false
+          }]
+          this.addData(this.myChart, maanden, dataSets)
+        })
+        break; 
+        
+        case 'showLogs':
         this.showViolations = false;
         this.showCameraViolations = false;
         this.showUsers = false;
@@ -105,7 +187,7 @@ export class HomeComponent implements OnInit {
   canvas: any;
   canvas2: any;
   ctx: any;
-  ctx2 : any;
+  ctx2: any;
 
   ngAfterViewInit() {
 
@@ -118,42 +200,21 @@ export class HomeComponent implements OnInit {
     this.myChart2 = new Chart(this.ctx2, {
       type: 'pie',
       data: {
-        labels: ['OK', 'WARNING', 'CRITICAL', 'UNKNOWN'],
-        datasets: [{
-          label: '# of Tomatoes',
-          data: [12, 19, 3, 5],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.5)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)'
-          ],
-          borderWidth: 1
-        }]
+        labels: [] = [],
+        datasets: [] = []
       },
       options: {
-         cutoutPercentage: 40,
+        cutoutPercentage: 40,
         responsive: false,
-    
+
       }
     })
 
     this.myChart = new Chart(this.ctx, {
       type: 'line',
       data: {
-        labels: [] = ['test1', 'test2'],
-        datasets: [{
-          label: '# of Total Messages',
-          data: [] = [],
-          backgroundColor: '#ffe4c9',
-
-        }]
+        labels: [] = [],
+        datasets: [] = []
       },
       options: {
         responsive: true,

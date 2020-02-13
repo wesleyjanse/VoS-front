@@ -17,6 +17,7 @@ export class User {
     userRole: UserRole;
     passwordChanged: boolean;
     userSettings: User;
+    creationDate?: Date;
     token?: string;
     password?: string;
   }

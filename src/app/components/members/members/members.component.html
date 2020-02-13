@@ -2,7 +2,7 @@
     <mat-icon>person_add</mat-icon>
 </button>
 <div class="container backgroundContainer">
-    <div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; justify-content: space-between; margin: 15px;">
         <h3>Gebruikers</h3>
         <p>
             <mat-slide-toggle unchecked (change)="onChange($event)">Toon werknemers</mat-slide-toggle>
@@ -39,6 +39,6 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator style="width: 100%;" #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    <mat-paginator style="width: 100%;" #paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons>
     </mat-paginator>
 </div>
