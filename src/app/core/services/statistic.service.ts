@@ -12,6 +12,7 @@ import { ViolationsByMonth } from 'src/app/shared/models/violationsByMonth';
 import { CameraPercentage } from 'src/app/shared/models/cameraPercentage';
 import { EmployeeStats } from 'src/app/shared/models/employeeStats';
 import { CameraStats } from 'src/app/shared/models/cameraStats';
+import { LogStats } from 'src/app/shared/models/logStats';
 
 
 @Injectable()
@@ -49,6 +50,10 @@ export class StatisticService {
 
   getCamStats(): Observable<CameraStats[]> {
     return this._httpClient.get<CameraStats[]>(`${environment.apiUrl}/Statistics/violationsPerCamera`);
+  }
+
+  getLogStats(): Observable<LogStats[]> {
+    return this._httpClient.get<LogStats[]>(`${environment.apiUrl}/Statistics/logCountByMonth`);
   }
 
 }

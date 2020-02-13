@@ -62,7 +62,6 @@ export class HomeComponent implements OnInit {
   }
 
   activate(type) {
-    console.log(type)
     switch (type) {
       case 'showViolations':
         this.showViolations = true;
@@ -264,6 +263,88 @@ export class HomeComponent implements OnInit {
         this.showCameraViolations = false;
         this.showUsers = false;
         this.showLogs = true;
+        console.log("uyeh")
+
+        this.statService.getLogStats().subscribe(res => {
+          var labels = []
+          var info = []
+          var warning = []
+          var error = []
+          var success = []
+          var maanden = []
+
+
+
+
+          res.map(item => {
+            labels.push(item.logTypeName)
+            item.logCountByMonths.map(log => {
+              if (maanden.length < 12) {
+                maanden.push(this.maanden[log.month - 1])
+              }
+              if (item.logTypeName == "INFO") {
+                info.push(log.count)
+              } else if (item.logTypeName == "WARNING") {
+                warning.push(log.count)
+              } else if (item.logTypeName == "SUCCESS") {
+                error.push(log.count)
+              } else if (item.logTypeName == "ERROR") {
+                success.push(log.count)
+              }
+            })
+          })
+
+          console.log(
+
+          )
+          var dataSets = [{
+            label: labels[0],
+            data: info,
+            borderColor: '#B668B7',
+            fill: false
+          },
+          {
+            label: labels[1],
+            data: warning,
+            borderColor: '#E15517',
+            fill: false
+          },
+          {
+            label: labels[2],
+            data: error,
+            borderColor: '#AE3C37',
+            fill: false
+          },
+          {
+            label: labels[3],
+            data: success,
+            borderColor: '#74247A',
+            fill: false
+          }]
+
+          this.addData(this.myChart, maanden, dataSets)
+          var labels2 = labels
+          var percentages = [info.reduce((a, b) => a + b), warning.reduce((a, b) => a + b), error.reduce((a, b) => a + b), success.reduce((a, b) => a + b)]
+
+          var dataSets2 = [{
+            data: percentages,
+            backgroundColor: [
+              'rgba(229,87,23, 0.5)',
+              'rgba(182,104,183, 0.5)',
+              'rgba(174,60,55, 0.5)',
+              'rgba(116,36,122, 0.5)'
+            ],
+            borderColor: [
+              'rgba(229,87,23,1)',
+              'rgba(182,104,183, 1)',
+              'rgba(174,60,55, 1)',
+              'rgba(116,36,122, 1)'
+            ],
+            borderWidth: 1
+          }]
+
+          this.addData(this.myChart2, labels, dataSets2)
+        })
         break;
     }
   }
