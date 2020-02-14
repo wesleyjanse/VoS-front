@@ -22,9 +22,11 @@ export class SettingsService {
         return this._httpClient.put<any>(`${environment.apiUrl}/Setting/updateUserSettings`, setting);
     }
 
-
     getAppSettings(): Observable<AppSettings> {
         return this._httpClient.get<AppSettings>(`${environment.apiUrl}/Setting/appSettings`);
     }
 
+    updateAppSettings(setting): Observable<any> {
+        return this._httpClient.put<any>(`${environment.apiUrl}/Setting/updateAppSettings`, setting);
+    }
 }

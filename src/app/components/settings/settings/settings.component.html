@@ -9,12 +9,65 @@
         </div>
         <div class="mt-5">
             <h5>Gebruiker instellingen</h5>
-            <mat-slide-toggle class="mt-2" [checked]="recieveRapport" (change)="onChangeRapport($event)">Ontvang maandelijks rapport</mat-slide-toggle>
+            <mat-slide-toggle class="mt-2" [checked]="recieveRapport" (change)="onChangeRapport($event)">Ontvang
+                maandelijks rapport</mat-slide-toggle>
         </div>
 
-        <div class="mt-5" *ngIf="isAdmin">
+        <div class="mt-5 pb-5" *ngIf="isAdmin">
             <h5>Applicatie instellingen</h5>
-
+            <div class="row mt-3 mb-5">
+                <div class="col-4">
+                    <mat-slide-toggle class="mt-2" [checked]="streamIsEnabled" (change)="onChangeStream($event)">
+                        Stream toegestaan</mat-slide-toggle>
+                </div>
+                <div class="col-4">
+                    <mat-slide-toggle class="mt-2" [checked]="isSafe" (change)="onChangeSafe($event)">
+                        Chauffeur is veilig
+                    </mat-slide-toggle>
+                </div>
+                <div class="col-4">
+                    <mat-slide-toggle class="mt-2" [checked]="alwaysCheckMovement" (change)="onChangeDetect($event)">Altijd detecteren</mat-slide-toggle>
+                </div>
+            </div>
+            <form [formGroup]="appSettingsForm" (ngSubmit)="onSubmit()">
+                <p class="text-danger text-center">
+                    {{error}}
+                </p>
+                <div class="form-group">
+                    <label for="fps">Snelheid van de camera's (fps)</label>
+                    <div class="input-group">
+                        <input type="number" placeholder="jouw e-mailadres" formControlName="fps"
+                            class="form-control form-control text-black"
+                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                        <div *ngIf="submitted && f.fps.errors" class="invalid-feedback text-right">
+                            <div *ngIf="f.fps.errors.required">Vul een geldig getal in</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="durationDelete">Duratie voor het verwijderen van filmpjes (weken)</label>
+                    <input type="number" formControlName="durationDelete" class="form-control form-control text-black"
+                        [ngClass]="{ 'is-invalid': submitted && f.durationDelete.errors }" />
+                    <div *ngIf="submitted && f.durationDelete.errors" class="invalid-feedback text-right">
+                        <div *ngIf="f.durationDelete.errors.required">Vul een geldig getal in</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="autoRefresh">Duratie van refreshen van data (minuten)</label>
+                    <input type="number" formControlName="autoRefresh" class="form-control form-control text-black"
+                        [ngClass]="{ 'is-invalid': submitted && f.durationDelete.errors }" />
+                    <div *ngIf="submitted && f.durationDelete.errors" class="invalid-feedback text-right">
+                        <div *ngIf="f.durationDelete.errors.required">Vul een geldig getal in</div>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button disabled class="w-100" color="accent" mat-flat-button
+                        type="submit">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Instellingen worden automatisch opgeslagen na het wijzigen. 
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
