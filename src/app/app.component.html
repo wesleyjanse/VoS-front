@@ -55,9 +55,9 @@
                 <mat-icon>info</mat-icon>
                 <span>Er zijn geen notificaties</span>
               </button>
-              <button *ngIf="notifCount > 1" (click)="clearAll()" mat-menu-item>
-                <mat-icon>delete_sweep</mat-icon>
-                <span>Lees alle</span>
+              <button style="background-color: rgba(182, 104, 183, 0.5);" *ngIf="notifCount > 1" (click)="clearAll()" mat-menu-item>
+                  <mat-icon>delete_sweep</mat-icon>
+                  <span>Lees alle</span>
               </button>
               <ng-container *ngIf="notifCount > 0">
                 <ng-container *ngFor="let item of notifications">

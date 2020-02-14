@@ -9,6 +9,8 @@ import { CameraPercentage } from 'src/app/shared/models/cameraPercentage';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/security/authentication.service';
 import { User } from 'src/app/shared/models/user';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-home',
@@ -21,9 +23,15 @@ export class HomeComponent implements OnInit {
   camPercentages: CameraPercentage[] = [];
   loading = true;
   stats: any;
+  moment: any = moment;
 
-  maanden = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"];
+
+  get f() { return this.filterForm.controls; }
+  filterForm = this.fb.group({
+    maand: new FormControl('Alles')
+  });
+
+  maanden = moment.months();
 
   dataTabel = {};
 
@@ -33,20 +41,29 @@ export class HomeComponent implements OnInit {
   showLogs = false;
   currentUser: User;
 
-  constructor(private router: Router, private violationService: ViolationService, private cameraService: CameraService, private statService: StatisticService, private authenticationService: AuthenticationService) {
+  constructor(private fb: FormBuilder, private router: Router, private violationService: ViolationService, private cameraService: CameraService, private statService: StatisticService, private authenticationService: AuthenticationService) {
     this.violationService.getViolationCountByCamera().subscribe(res => {
       this.violationCounts = res;
       this.loading = false;
     });
-
-    this.authenticationService.currentUser.subscribe(user => {
-      this.currentUser = user
-      console.log(user)
-      if (!this.currentUser.passwordChanged) {
-        this.router.navigate([{ outlets: { primary: 'resetPass' } }])
+    this.moment.locale('nl');
+    this.f.maand.valueChanges.subscribe(val => {
+      if(val === "Alles"){
+        this.activate("showViolations");
+      } else {
+        this.activate("showViolationsMonth", val);
       }
     })
 
+    this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = user
+      if (!this.currentUser.passwordChanged) {
+        this.router.navigate([{ outlets: { primary: 'resetPass' } }])
+      }
+      if (this.currentUser.userRole.roleName.toLowerCase() == "receptionist") {
+        this.router.navigate([{ outlets: { primary: 'reception' } }])
+      }
+    })
 
     this.statService.getRapportStats().subscribe(res => this.stats = res);
   }
@@ -61,8 +78,53 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  activate(type) {
+  activate(type, month?: number) {
     switch (type) {
+      case 'showViolationsMonth':
+        this.statService.getMonthStats(+month + 1).subscribe(res => {
+
+          var days = []
+          var violations = [];
+          var detected = [];
+          var trucksLoaded = [];
+          var trucksUnloaded = [];
+          res.map(
+            item => {
+              days.push(moment(item.date).format('L'))
+              violations.push(item.totalViolationCount)
+              detected.push(item.employeesDetected)
+              trucksLoaded.push(item.trucksLoaded)
+              trucksUnloaded.push(item.trucksUnloaded)
+            }
+          )
+          
+          var dataSets = [{
+            label: "Overtredingen",
+            data: violations,
+            borderColor: '#B668B7',
+            fill: false
+          },
+          {
+            label: "Detecties",
+            data: detected,
+            borderColor: '#E15517',
+            fill: false
+          },
+          {
+            label: "Laden",
+            data: trucksLoaded,
+            borderColor: '#AE3C37',
+            fill: false
+          },
+          {
+            label: "Lossen",
+            data: trucksUnloaded,
+            borderColor: '#74247A',
+            fill: false
+          }]
+          this.addData(this.myChart, days, dataSets)
+        })
+        break;
       case 'showViolations':
         this.showViolations = true;
         this.showCameraViolations = false;
@@ -113,9 +175,7 @@ export class HomeComponent implements OnInit {
             borderWidth: 1
           }]
           this.addData(this.myChart2, labels2, dataSets2)
-
-
-
+          
           var dataSets = [{
             label: "Overtredingen",
             data: violations,
@@ -246,8 +306,6 @@ export class HomeComponent implements OnInit {
 
           this.addData(this.myChart2, labels, dataSets2)
 
-
-
           var dataSets = [{
             label: "Aantal nieuwe werknemers per maand",
             data: data,
@@ -263,7 +321,6 @@ export class HomeComponent implements OnInit {
         this.showCameraViolations = false;
         this.showUsers = false;
         this.showLogs = true;
-        console.log("uyeh")
 
         this.statService.getLogStats().subscribe(res => {
           var labels = []
@@ -272,9 +329,6 @@ export class HomeComponent implements OnInit {
           var error = []
           var success = []
           var maanden = []
-
-
-
 
           res.map(item => {
             labels.push(item.logTypeName)

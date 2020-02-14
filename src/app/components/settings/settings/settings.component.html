@@ -1,1 +1,20 @@
-<p>settings works!</p>
+<div class="container backgroundContainer">
+    <div style="margin: 15px;">
+        <h3>Instellingen</h3>
+        <p>Hier heeft u de mogelijkheid om uw persoonlijke gebruikers instellingen te wijzigen. <span *ngIf="isAdmin">
+                Ook heeft u als verantwoordelijke de mogelijkheid om applicatieinstellingen te wijzigen.
+            </span> </p>
+        <div *ngIf="loading" style="background-color: white; text-align: center;">
+            <img src="../../../../assets/images/cloud_load.gif" alt="loading">
+        </div>
+        <div class="mt-5">
+            <h5>Gebruiker instellingen</h5>
+            <mat-slide-toggle class="mt-2" [checked]="recieveRapport" (change)="onChangeRapport($event)">Ontvang maandelijks rapport</mat-slide-toggle>
+        </div>
+
+        <div class="mt-5" *ngIf="isAdmin">
+            <h5>Applicatie instellingen</h5>
+
+        </div>
+    </div>
+</div>

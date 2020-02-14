@@ -28,8 +28,8 @@ export class StatisticService {
     return this._httpClient.get<Statistics>(`${environment.apiUrl}/Statistics/${id}`);
   }
 
-  getMonthStats(): Observable<DayStats[]> {
-    return this._httpClient.get<DayStats[]>(`${environment.apiUrl}/Statistics/monthStats`);
+  getMonthStats(id): Observable<DayStats[]> {
+    return this._httpClient.get<DayStats[]>(`${environment.apiUrl}/Statistics/monthStats?month=${id}`);
   }
 
   getRapportStats(): Observable<DayStats[]> {
