@@ -11,6 +11,8 @@ import { AuthenticationService } from 'src/app/security/authentication.service';
 import { User } from 'src/app/shared/models/user';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { UserService } from 'src/app/core/services/user.service';
+import { ToastService } from 'src/app/toast';
 
 @Component({
   selector: 'app-home',
@@ -31,21 +33,29 @@ export class HomeComponent implements OnInit {
     maand: new FormControl('Alles')
   });
 
+  get f2() { return this.sendMailForm.controls; }
+  sendMailForm = this.fb.group({
+    user: new FormControl('Selecteer'),
+    month: new FormControl('Selecteer')
+  });
+
   maanden = moment.months();
-
   dataTabel = {};
-
+  allUser: User[] = []
   showViolations = true;
   showCameraViolations = false;
   showUsers = false;
   showLogs = false;
   currentUser: User;
-
-  constructor(private fb: FormBuilder, private router: Router, private violationService: ViolationService, private cameraService: CameraService, private statService: StatisticService, private authenticationService: AuthenticationService) {
+  loadingSend = false;
+  constructor(private toast: ToastService, private userService: UserService, private fb: FormBuilder, private router: Router, private violationService: ViolationService, private cameraService: CameraService, private statService: StatisticService, private authenticationService: AuthenticationService) {
     this.violationService.getViolationCountByCamera().subscribe(res => {
       this.violationCounts = res;
       this.loading = false;
     });
+
+    this.userService.getUsers().subscribe(res => this.allUser = res)
+
     this.moment.locale('nl');
     this.f.maand.valueChanges.subscribe(val => {
       if(val === "Alles"){
@@ -75,6 +85,32 @@ export class HomeComponent implements OnInit {
       chart.data.datasets = []
       chart.data.datasets = data
       chart.update();
+    }
+  }
+
+  onSubmit(){
+    this.loadingSend = true;
+
+    let userid = this.f2.user.value
+    let month = this.f2.month.value
+
+    if(userid == "Selecteer")return;
+    if(this.sendMailForm.invalid)return;
+
+    if(month == "Selecteer"){
+      this.statService.sendMail(userid).subscribe(() =>{
+        this.toast.show({
+          text: "Mail verstuurd!",
+          type: "success"
+        })
+      })
+    } else {
+      this.statService.sendMail(userid, (+month+1)).subscribe(() =>{
+        this.toast.show({
+          text: "Mail verstuurd!",
+          type: "success"
+        })
+      })
     }
   }
 

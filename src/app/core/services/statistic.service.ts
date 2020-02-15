@@ -56,4 +56,8 @@ export class StatisticService {
     return this._httpClient.get<LogStats[]>(`${environment.apiUrl}/Statistics/logCountByMonth`);
   }
 
+  sendMail(userId, month?): Observable<any> {
+    return this._httpClient.get<any>(`${environment.apiUrl}/Statistics/sendMail?userid=${userId}&month=${month}`);
+  }
+
 }

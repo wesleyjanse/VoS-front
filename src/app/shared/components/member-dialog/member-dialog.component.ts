@@ -139,15 +139,19 @@ export class MemberDialogComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  onSubmitMember() {
     this.submitted = true;
-    if (this.memberForm.invalid || this.f.role.value != 'Kies...') {
+    console.log(this.data.user)
+
+    if (this.memberForm.invalid) {
       return;
     }
 
     this.loading = true;
-
     if (this.data.user.type !== 'employee') {
+      if (this.f.role.value === 'Kies...') {
+        return;
+      }
       var newUser: User = {
         userID: this.selectedMember.userID,
         email: this.f.email.value,
@@ -167,6 +171,7 @@ export class MemberDialogComponent implements OnInit {
         this.dialogRef.close(true);
       })
     } else {
+
       console.log("UPDATE EMPLOYEE")
       var newEmployee: Employee = {
         employeeID: this.selectedEmployee.employeeID,
