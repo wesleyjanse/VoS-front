@@ -23,7 +23,7 @@
     "@angular/router": "~8.2.9",
     "angular-svg-icon": "^8.0.0",
     "bootstrap": "^4.4.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "moment": "^2.24.0",
     "ngx-qrcode2": "0.0.9",
     "rxjs": "~6.4.0",
